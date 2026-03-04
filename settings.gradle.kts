@@ -22,5 +22,10 @@ dependencyResolutionManagement {
 rootProject.name = "Memorify"
 include(":app")
 
-// Core
+include(":core:core-domain")
+include(":core:core-data")
 include(":core:core-ui")
+
+
+include(":feature-auth")
+

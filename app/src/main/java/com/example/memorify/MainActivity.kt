@@ -10,7 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.example.memorify.core.presentation.theme.MemorifyTheme
+import com.example.core_ui.theme.MemorifyTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

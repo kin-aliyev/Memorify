@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.memorify.core.navigation.GraphRoute
-import com.example.memorify.feature_auth.presentation.navigation.authNavGraph
+import com.example.core_ui.navigation.GraphRoute
+import com.example.feature_auth.presentation.navigation.authNavGraph
 
 @Composable
 fun MainNavigation(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -14,6 +14,13 @@ fun MainNavigation(navController: NavHostController, modifier: Modifier = Modifi
         startDestination = GraphRoute.Auth,
         modifier = modifier
     ) {
-        authNavGraph(navController)
+        authNavGraph(
+            navController = navController,
+            onAuthSuccess = {
+                navController.navigate(GraphRoute.Home) {
+                    popUpTo<GraphRoute.Auth> { inclusive = true}
+                }
+            }
+        )
     }
 }
