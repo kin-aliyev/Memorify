@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/core/core-domain" />
             <option value="$PROJECT_DIR$/core/core-ui" />
             <option value="$PROJECT_DIR$/feature-auth" />
+            <option value="$PROJECT_DIR$/feature-home" />
           </set>
         </option>
       </GradleProjectSettings>

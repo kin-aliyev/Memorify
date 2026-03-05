@@ -1,65 +1,104 @@
 [versions]
+# ─── Build ────────────────────────────────────────────────────
 agp = "9.0.1"
-firebaseBom = "34.10.0"
+kotlin = "2.3.10"
 kspVersion = "2.3.2"
+jetbrainsKotlinJvm = "2.3.10"
+
+# ─── Android Core ─────────────────────────────────────────────
+coreKtx = "1.17.0"
+activityCompose = "1.12.4"
+
+# ─── Compose ──────────────────────────────────────────────────
+composeBom = "2026.02.01"
+navigationCompose = "2.9.7"
+lifecycleViewModelCompose = "2.10.0"
+
+# ─── DI ───────────────────────────────────────────────────────
 hiltVersion = "2.59.2"
 hiltNavigationCompose = "1.3.0"
-lifecycleViewModelCompose = "2.10.0"
-kotlin = "2.3.10"
-coreKtx = "1.17.0"
-junit = "4.13.2"
+
+# ─── Firebase ─────────────────────────────────────────────────
+firebaseBom = "34.10.0"
+gmsGoogleServices = "4.4.4"
+
+# ─── Networking ───────────────────────────────────────────────
+retrofit = "3.0.0"
+okhttp = "5.3.2"
+
+# ─── Kotlin Libraries ─────────────────────────────────────────
+coroutines = "1.10.2"
+serialization = "1.10.0"
+
+# ─── Google Auth ──────────────────────────────────────────────
+credentialsPlayServicesAuth = "1.5.0"
+googleid     = "1.2.0"
+
+# ─── Tests ────────────────────────────────────────────────────
+junit        = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-activityCompose = "1.12.4"
-composeBom = "2026.02.01"
-credentialsPlayServicesAuth = "1.5.0"
-googleid = "1.2.0"
-gmsGoogleServices = "4.4.4"
-navigationCompose = "2.9.7"
-serialization = "1.10.0"
-material = "1.13.0"
-jetbrainsKotlinJvm = "2.3.10"
-coroutines = "1.9.0"
 
 [libraries]
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+# ─── Android Core ─────────────────────────────────────────────
+androidx-core-ktx                   = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-activity-compose           = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+# ─── Compose ──────────────────────────────────────────────────
+androidx-compose-bom                = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui                         = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-tooling                 = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview         = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest           = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4             = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-material3                  = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
-androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "credentialsPlayServicesAuth" }
-androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsPlayServicesAuth" }
-googleid = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
-
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
-kotlin-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization"}
-
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-firebase-auth = { module = "com.google.firebase:firebase-auth" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
-
-hilt-android = { group = "com.google.dagger", name = "hilt-android" , version.ref = "hiltVersion"}
-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler" , version.ref = "hiltVersion"}
-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
-
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-navigation-compose         = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleViewModelCompose" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-ui = { group = "androidx.compose.ui", name = "ui" }
-androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
-androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+# ─── DI ───────────────────────────────────────────────────────
+hilt-android                        = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
+hilt-compiler                       = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hiltVersion" }
+hilt-navigation-compose             = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+
+# ─── Firebase ─────────────────────────────────────────────────
+firebase-bom                        = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-auth                       = { module = "com.google.firebase:firebase-auth" }
+firebase-firestore                  = { module = "com.google.firebase:firebase-firestore" }
+firebase-analytics                  = { module = "com.google.firebase:firebase-analytics" }
+
+# ─── Networking ───────────────────────────────────────────────
+retrofit                            = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-gson                       = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp-logging                      = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+
+# ─── Kotlin Libraries ─────────────────────────────────────────
+kotlinx-coroutines-core             = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlin-serialization-core           = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
+
+# ─── Google Auth ──────────────────────────────────────────────
+androidx-credentials                = { module = "androidx.credentials:credentials", version.ref = "credentialsPlayServicesAuth" }
+androidx-credentials-play-services-auth = { module = "androidx.credentials:credentials-play-services-auth", version.ref = "credentialsPlayServicesAuth" }
+googleid                            = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleid" }
+
+# ─── Tests ────────────────────────────────────────────────────
+junit                               = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit                      = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core              = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlinAndroidKsp = { id = "com.google.devtools.ksp", version.ref ="kspVersion" }
-hiltAndroid = { id = "com.google.dagger.hilt.android", version.ref ="hiltVersion" }
-gms-google-services = { id = "com.google.gms.google-services", version.ref = "gmsGoogleServices" }
-kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-android-library = { id = "com.android.library", version.ref = "agp" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+# ─── Build ────────────────────────────────────────────────────
+android-application                 = { id = "com.android.application", version.ref = "agp" }
+android-library                     = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-jvm                = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+
+# ─── Kotlin ───────────────────────────────────────────────────
+kotlin-compose                      = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinx-serialization               = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlinAndroidKsp                    = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+
+# ─── DI ───────────────────────────────────────────────────────
+hiltAndroid                         = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
+
+# ─── Firebase ─────────────────────────────────────────────────
+gms-google-services                 = { id = "com.google.gms.google-services", version.ref = "gmsGoogleServices" }
