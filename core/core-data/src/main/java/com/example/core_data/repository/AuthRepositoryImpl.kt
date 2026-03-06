@@ -1,8 +1,8 @@
-package com.example.feature_auth.data.repository
+package com.example.core_data.repository
 
+import com.example.core_data.mapper.toDomain
+import com.example.core_data.service.FirebaseAuthService
 import com.example.core_domain.model.User
-import com.example.feature_auth.data.remote.mapper.toDomain
-import com.example.feature_auth.data.remote.service.FirebaseAuthService
 import com.example.core_domain.repository.AuthRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

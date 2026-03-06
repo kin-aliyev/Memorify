@@ -1,4 +1,4 @@
-package com.example.feature_auth.di
+package com.example.core_data.di
 
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -11,7 +11,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AuthModule {
+object FirebaseModule {
     @Provides
     @Singleton
     fun auth(): FirebaseAuth = Firebase.auth

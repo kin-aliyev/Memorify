@@ -2,7 +2,7 @@ package com.example.feature_auth.presentation.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.feature_auth.domain.exception.AuthException
+import com.example.core_domain.exception.AppException
 import com.example.feature_auth.domain.provider.AuthStringProvider
 import com.example.feature_auth.domain.usecase.auth.SignUpWithEmailUseCase
 import com.example.feature_auth.domain.validation.EmailValidator
@@ -98,7 +98,7 @@ class SignUpViewModel @Inject constructor(
     }
 
     private fun handleError(error: Throwable) {
-        val authException = error as? AuthException ?: AuthException.UnknownError(error)
+        val authException = error as? AppException ?: AppException.UnknownError(error)
         val errorMessage = stringProvider.getErrorMessage(authException)
 
         _uiState.update { currentState ->

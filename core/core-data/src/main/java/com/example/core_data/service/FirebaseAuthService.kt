@@ -1,6 +1,6 @@
-package com.example.feature_auth.data.remote.service
+package com.example.core_data.service
 
-import com.example.feature_auth.domain.exception.AuthException
+import com.example.core_domain.exception.AppException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -33,7 +33,7 @@ class FirebaseAuthService @Inject constructor(
         return try {
             val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             val user = authResult.user
-                ?: return Result.failure(AuthException.UnknownError(errorMessage = "Authentication succeeded but user is null"))
+                ?: return Result.failure(AppException.UnknownError(errorMessage = "Authentication succeeded but user is null"))
 
             Result.success(user)
         } catch (e: Exception) {
@@ -45,7 +45,7 @@ class FirebaseAuthService @Inject constructor(
         return try {
             val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             val user = authResult.user
-                ?: return Result.failure(AuthException.UnknownError(errorMessage = "Account creation succeeded but user is null"))
+                ?: return Result.failure(AppException.UnknownError(errorMessage = "Account creation succeeded but user is null"))
 
             Result.success(user)
         } catch (e: Exception) {
@@ -58,7 +58,7 @@ class FirebaseAuthService @Inject constructor(
             val credential = GoogleAuthProvider.getCredential(googleIdToken, null)
             val authResult = firebaseAuth.signInWithCredential(credential).await()
             val user = authResult.user
-                ?: return Result.failure(AuthException.UnknownError(errorMessage = "Google authentication succeeded but user is null"))
+                ?: return Result.failure(AppException.UnknownError(errorMessage = "Google authentication succeeded but user is null"))
 
             Result.success(user)
         } catch (e: Exception) {
@@ -68,7 +68,7 @@ class FirebaseAuthService @Inject constructor(
 
     suspend fun deleteAccount(): Result<Unit> {
         return try {
-            val currentUser = firebaseAuth.currentUser ?: return Result.failure(AuthException.UserNotFound)
+            val currentUser = firebaseAuth.currentUser ?: return Result.failure(AppException.UserNotFound)
             currentUser.delete().await()
 
             Result.success(Unit)
@@ -87,16 +87,16 @@ class FirebaseAuthService @Inject constructor(
         }
     }
 
-    private fun mapToAuthException(e: Exception, defaultMessage: String): AuthException {
+    private fun mapToAuthException(e: Exception, defaultMessage: String): AppException {
         return when (e) {
-            is AuthException -> e
-            is FirebaseAuthInvalidCredentialsException -> AuthException.InvalidCredentials
-            is FirebaseAuthInvalidUserException -> AuthException.UserNotFound
-            is FirebaseAuthUserCollisionException -> AuthException.UserAlreadyExists
-            is FirebaseAuthRecentLoginRequiredException -> AuthException.ReAuthRequired
-            is FirebaseNetworkException -> AuthException.NetworkError
+            is AppException -> e
+            is FirebaseAuthInvalidCredentialsException -> AppException.InvalidCredentials
+            is FirebaseAuthInvalidUserException -> AppException.UserNotFound
+            is FirebaseAuthUserCollisionException -> AppException.UserAlreadyExists
+            is FirebaseAuthRecentLoginRequiredException -> AppException.ReAuthRequired
+            is FirebaseNetworkException -> AppException.NetworkError
 
-            else -> AuthException.UnknownError(e, defaultMessage)
+            else -> AppException.UnknownError(e, defaultMessage)
         }
     }
 }

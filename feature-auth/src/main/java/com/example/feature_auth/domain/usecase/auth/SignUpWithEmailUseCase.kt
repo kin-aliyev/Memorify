@@ -1,7 +1,7 @@
 package com.example.feature_auth.domain.usecase.auth
 
 import com.example.core_domain.model.User
-import com.example.feature_auth.domain.exception.AuthException
+import com.example.core_domain.exception.AppException
 import com.example.core_domain.repository.AuthRepository
 import com.example.feature_auth.domain.validation.EmailValidator
 import com.example.feature_auth.domain.validation.PasswordValidator
@@ -14,16 +14,16 @@ class SignUpWithEmailUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(email: String, password: String, confirmPassword: String): Result<User> {
         // Early validation for empty fields
-        if (email.isBlank()) return Result.failure(AuthException.EmptyEmail)
-        if (password.isBlank()) return Result.failure(AuthException.EmptyPassword)
+        if (email.isBlank()) return Result.failure(AppException.EmptyEmail)
+        if (password.isBlank()) return Result.failure(AppException.EmptyPassword)
 
         // Validate password match first
-        if (password != confirmPassword) return Result.failure(AuthException.PasswordMismatch)
+        if (password != confirmPassword) return Result.failure(AppException.PasswordMismatch)
 
         // Validate email format
-        if (!emailValidator.isValid(email)) return Result.failure(AuthException.InvalidEmail)
+        if (!emailValidator.isValid(email)) return Result.failure(AppException.InvalidEmail)
 
-        if (!passwordValidator.validate(password).isValid) return Result.failure(AuthException.WeakPassword)
+        if (!passwordValidator.validate(password).isValid) return Result.failure(AppException.WeakPassword)
 
         return authRepository.signUpWithEmail(email, password)
     }

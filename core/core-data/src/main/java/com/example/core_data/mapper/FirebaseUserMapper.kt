@@ -1,4 +1,4 @@
-package com.example.feature_auth.data.remote.mapper
+package com.example.core_data.mapper
 
 import com.example.core_domain.model.User
 import com.google.firebase.auth.FirebaseUser

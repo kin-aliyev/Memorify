@@ -2,7 +2,9 @@ package com.example.feature_auth.presentation.signup.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -64,6 +66,8 @@ fun SignUpForm(
                 enabled = !uiState.isLoading,
                 rulesUi = emptyList()
             )
+
+            Spacer(Modifier.height(Dimens.spacing4))
 
             PrimaryButton(
                 label = stringResource(R.string.sign_up),

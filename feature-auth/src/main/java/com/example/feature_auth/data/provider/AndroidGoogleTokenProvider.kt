@@ -1,4 +1,4 @@
-package com.example.feature_auth.data.remote.provider
+package com.example.feature_auth.data.provider
 
 import android.content.Context
 import android.util.Log
@@ -7,7 +7,7 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
-import com.example.feature_auth.domain.exception.AuthException
+import com.example.core_domain.exception.AppException
 import com.example.feature_auth.domain.provider.GoogleTokenProvider
 import com.example.memorify.feature_auth.BuildConfig
 import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption
@@ -42,16 +42,16 @@ class AndroidGoogleTokenProvider @Inject constructor() : GoogleTokenProvider {
 
         } catch (e: NoCredentialException) {
             Log.d(TAG, "No Google credentials available", e)
-            Result.failure(AuthException.GoogleAccountNotFound)
+            Result.failure(AppException.GoogleAccountNotFound)
         } catch (e: GetCredentialCancellationException) {
             Log.d(TAG, "User cancelled Google sign-in", e)
-            Result.failure(AuthException.GoogleAuthCancelled)
+            Result.failure(AppException.GoogleAuthCancelled)
         } catch (e: GetCredentialException) {
             Log.d(TAG, "Failed to get Google credentials", e)
-            Result.failure(AuthException.GoogleAuthFailed)
+            Result.failure(AppException.GoogleAuthFailed)
         } catch (e: Exception) {
             Log.e(TAG, "Unexpected error during Google sign-in", e)
-            Result.failure(AuthException.UnknownError(e, "Google sign-in failed"))
+            Result.failure(AppException.UnknownError(e, "Google sign-in failed"))
         }
     }
 
