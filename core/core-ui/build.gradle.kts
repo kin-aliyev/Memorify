@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:core-domain"))
     // ─── Serialization (GraphRoute @Serializable) ──────────────
     // navigation-compose тянет runtime транзитивно, но явная зависимость нужна для компиляции аннотаций
     implementation(libs.kotlin.serialization.core)
