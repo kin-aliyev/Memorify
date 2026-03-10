@@ -13,6 +13,7 @@ object Dimens {
     val spacing12 = 12.dp
     val spacing16 = 16.dp
     val spacing24 = 24.dp
+    val spacing32 = 32.dp
 
     // ════════════════════════════════════════════════════════
     // PADDING — отступы внутри контейнеров
@@ -41,7 +42,8 @@ object Dimens {
     val heightTab       = 48.dp
     val heightTextField = 56.dp
     val heightListItem  = 56.dp
-    val heightAppBar    = 64.dp
+    val heightTopAppBar    = 64.dp
+    val heightNavigationBar = 80.dp
 
     // ════════════════════════════════════════════════════════
     //  ELEVATION — Material 3 elevation levels

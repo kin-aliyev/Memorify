@@ -40,6 +40,9 @@ dependencies {
     // navigation-compose тянет runtime транзитивно, но явная зависимость нужна для компиляции аннотаций
     implementation(libs.kotlin.serialization.core)
 
+    // ─── Navigation ───────────────────────────────────────────
+    implementation(libs.androidx.navigation.compose)
+
     // ─── Compose ──────────────────────────────────────────────
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)

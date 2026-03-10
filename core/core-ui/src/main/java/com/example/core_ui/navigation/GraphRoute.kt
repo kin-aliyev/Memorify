@@ -8,6 +8,12 @@ sealed interface GraphRoute {
 
     @Serializable
     data object Home : GraphRoute
+
+    @Serializable
+    data object Analytics: GraphRoute
+
+    @Serializable
+    data object Settings: GraphRoute
 }
 
 

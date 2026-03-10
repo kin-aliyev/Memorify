@@ -47,6 +47,7 @@ dependencies {
     // ─── Modules ──────────────────────────────────────────────
     implementation(project(":core:core-ui"))
     implementation(project(":feature-auth"))
+    implementation(project(":feature-home"))
 
     // ─── Navigation ───────────────────────────────────────────
     implementation(libs.androidx.navigation.compose)

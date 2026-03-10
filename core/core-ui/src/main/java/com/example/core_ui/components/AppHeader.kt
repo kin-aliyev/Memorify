@@ -17,7 +17,7 @@ import com.example.core_ui.R
 fun AppHeader(modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.heightIn(min = Dimens.heightAppBar)
+        modifier = modifier.heightIn(min = Dimens.heightTopAppBar)
     ) {
         Image(
             painter = painterResource(R.drawable.image_app_logo),
