@@ -11,21 +11,21 @@ import com.example.core_ui.R
 enum class BottomNavItem(
     val route: GraphRoute,
     val icon: ImageVector,
-    @StringRes val label: Int,
+    @StringRes val labelRes: Int,
 ) {
     Home(
         route = GraphRoute.Home,
         icon = Icons.Default.Home,
-        label = R.string.nav_home
+        labelRes = R.string.nav_home
     ),
     Analytics(
         route = GraphRoute.Analytics,
         icon = Icons.Default.Analytics,
-        label = R.string.nav_analytics
+        labelRes = R.string.nav_analytics
     ),
     Settings(
         route = GraphRoute.Settings,
         icon = Icons.Default.Settings,
-        label = R.string.nav_settings
+        labelRes = R.string.nav_settings
     )
 }

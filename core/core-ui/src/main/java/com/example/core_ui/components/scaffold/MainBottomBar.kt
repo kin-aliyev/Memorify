@@ -1,16 +1,20 @@
-package com.example.core_ui.components
+package com.example.core_ui.components.scaffold
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
-import com.example.core_ui.R
+import com.example.core_ui.Dimens
 import com.example.core_ui.navigation.BottomNavItem
 import com.example.core_ui.navigation.GraphRoute
 
@@ -23,8 +27,10 @@ fun MainBottomBar(
     NavigationBar(
         modifier = modifier
             .fillMaxWidth()
-            .height(Dimens.heightNavigationBar),
+            .height(Dimens.heightNavigationBar)
+            .clip(RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp)),
         windowInsets = WindowInsets(0),
+        containerColor = MaterialTheme.colorScheme.surfaceContainer
     ) {
         BottomNavItem.entries.forEach { item ->
             val isSelected = currentDestination?.hierarchy?.any { destination ->
@@ -39,7 +45,8 @@ fun MainBottomBar(
                 selected = isSelected,
                 onClick = { onNavigate(item.route) },
                 icon = item.icon,
-                label = stringResource(item.label)
+                label = stringResource(item.labelRes),
+                modifier = Modifier.weight(1f),
             )
         }
     }

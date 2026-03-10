@@ -1,8 +1,7 @@
-package com.example.core_ui.components
+package com.example.core_ui.components.scaffold
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.CubicBezierEasing
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -38,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.core_ui.Dimens
 import com.example.core_ui.theme.MemorifyTheme
 
 private val IndicatorWidth = 64.dp
@@ -112,11 +112,11 @@ fun NavigationBarItem(
             Icon(
                 imageVector = icon, contentDescription = null,
                 tint = contentColor,
-                modifier = Modifier.size(Dimens.iconMd)
+                modifier = Modifier.Companion.size(Dimens.iconMd)
             )
         }
 
-        Spacer(Modifier.height(Dimens.spacing4))
+        Spacer(Modifier.Companion.height(Dimens.spacing4))
 
         Text(
             text = label,

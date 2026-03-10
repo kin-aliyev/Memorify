@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.memorify.feature_auth.R
-import com.example.core_ui.components.Dimens
-import com.example.core_ui.components.Dimens.elevation2
+import com.example.core_ui.Dimens
+import com.example.core_ui.Dimens.elevation2
 import com.example.core_ui.components.PrimaryButton
 import com.example.core_ui.theme.MemorifyTheme
 import com.example.feature_auth.presentation.signup.SignUpAction
