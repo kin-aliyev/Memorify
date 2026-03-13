@@ -8,7 +8,7 @@ import com.example.core_ui.navigation.GraphRoute
 fun NavGraphBuilder.homeNavGraph(
     onSetTopBar: (TopBarState) -> Unit,
 ) {
-    navigation<GraphRoute.Home>(startDestination = HomeRoute.Home) {
+    navigation<GraphRoute.Home>(startDestination = HomeRoute.Collections) {
 
     }
 }

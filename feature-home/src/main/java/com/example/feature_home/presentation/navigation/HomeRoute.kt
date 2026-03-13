@@ -4,8 +4,14 @@ import kotlinx.serialization.Serializable
 
 sealed interface HomeRoute {
     @Serializable
-    data object Home : HomeRoute
+    data object Collections : HomeRoute
 
     @Serializable
-    data class Detail(val id: String) : HomeRoute
+    data class CollectionDetail(val collectionId: String) : HomeRoute
+
+    @Serializable
+    data class AddWordManual(val collectionId: String) : HomeRoute
+
+    @Serializable
+    data class AddWordAi(val collectionId: String) : HomeRoute
 }
