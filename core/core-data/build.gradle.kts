@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
-//    alias(libs.plugins.hiltAndroid)
-//    alias(libs.plugins.kotlinAndroidKsp)
+    alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.kotlinAndroidKsp)
 }
 
 android {
@@ -31,11 +31,15 @@ android {
 }
 
 dependencies {
-    // Добавляй по мере необходимости:
-    // implementation(project(":core:core-domain"))  — когда появятся shared репозитории
-    // implementation(libs.hilt.android)             — когда появятся DI модули
-    // ksp(libs.hilt.compiler)
-    // implementation(platform(libs.firebase.bom))   — когда появится Firestore
-    // implementation(libs.firebase.firestore)
-    // implementation(libs.room.runtime)             — когда появится Room
+     implementation(project(":core:core-domain"))
+
+     implementation(libs.hilt.android)
+     ksp(libs.hilt.compiler)
+
+     implementation(platform(libs.firebase.bom))
+     implementation(libs.firebase.firestore)
+     implementation(libs.firebase.auth)
+
+    implementation(libs.kotlinx.coroutines.core)
+
 }

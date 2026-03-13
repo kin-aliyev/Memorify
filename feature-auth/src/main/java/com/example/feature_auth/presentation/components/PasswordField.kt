@@ -28,8 +28,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.example.feature_auth.presentation.model.PasswordRuleUi
 import com.example.memorify.feature_auth.R
-import com.example.core_ui.components.Dimens
-import com.example.core_ui.components.StandardTextField
+import com.example.core_ui.Dimens
+import com.example.core_ui.common.StandardTextField
 
 @Composable
 fun PasswordField(

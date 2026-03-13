@@ -17,10 +17,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.memorify.feature_auth.R
-import com.example.core_ui.components.ClickableText
-import com.example.core_ui.components.Dimens
-import com.example.core_ui.components.Dimens.elevation2
-import com.example.core_ui.components.PrimaryButton
+import com.example.core_ui.common.ClickableText
+import com.example.core_ui.Dimens
+import com.example.core_ui.Dimens.elevation2
+import com.example.core_ui.common.PrimaryButton
 import com.example.core_ui.theme.MemorifyTheme
 import com.example.feature_auth.presentation.components.EmailField
 import com.example.feature_auth.presentation.components.OrDivider

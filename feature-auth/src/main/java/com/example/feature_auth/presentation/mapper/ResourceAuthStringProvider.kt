@@ -2,7 +2,7 @@ package com.example.feature_auth.presentation.mapper
 
 import android.content.Context
 import com.example.memorify.feature_auth.R
-import com.example.feature_auth.domain.exception.AuthException
+import com.example.core_domain.exception.AppException
 import com.example.feature_auth.domain.provider.AuthStringProvider
 import com.example.feature_auth.domain.model.PasswordRule
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -11,27 +11,27 @@ import javax.inject.Inject
 class ResourceAuthStringProvider @Inject constructor(
     @param:ApplicationContext private val context: Context
 ) : AuthStringProvider {
-    override fun getErrorMessage(exception: AuthException): String = when (exception) {
+    override fun getErrorMessage(exception: AppException): String = when (exception) {
         // Validation errors
-        AuthException.EmptyEmail -> context.getString(R.string.error_empty_email)
-        AuthException.EmptyPassword -> context.getString(R.string.error_empty_password)
-        AuthException.InvalidEmail -> context.getString(R.string.error_invalid_email)
-        AuthException.WeakPassword -> context.getString(R.string.error_weak_password)
-        AuthException.PasswordMismatch -> context.getString(R.string.error_passwords_do_not_match)
+        AppException.EmptyEmail -> context.getString(R.string.error_empty_email)
+        AppException.EmptyPassword -> context.getString(R.string.error_empty_password)
+        AppException.InvalidEmail -> context.getString(R.string.error_invalid_email)
+        AppException.WeakPassword -> context.getString(R.string.error_weak_password)
+        AppException.PasswordMismatch -> context.getString(R.string.error_passwords_do_not_match)
 
         // Auth errors
-        AuthException.InvalidCredentials -> context.getString(R.string.error_invalid_credentials)
-        AuthException.UserNotFound -> context.getString(R.string.error_user_not_found)
-        AuthException.UserAlreadyExists -> context.getString(R.string.error_user_already_exists)
-        AuthException.NetworkError -> context.getString(R.string.error_network_connection)
-        AuthException.ReAuthRequired -> context.getString(R.string.error_reauth_required)
+        AppException.InvalidCredentials -> context.getString(R.string.error_invalid_credentials)
+        AppException.UserNotFound -> context.getString(R.string.error_user_not_found)
+        AppException.UserAlreadyExists -> context.getString(R.string.error_user_already_exists)
+        AppException.NetworkError -> context.getString(R.string.error_network_connection)
+        AppException.ReAuthRequired -> context.getString(R.string.error_reauth_required)
 
         // Google errors
-        AuthException.GoogleAccountNotFound -> context.getString(R.string.error_google_account_not_found)
-        AuthException.GoogleAuthCancelled -> context.getString(R.string.error_google_auth_cancelled)
-        AuthException.GoogleAuthFailed -> context.getString(R.string.error_google_auth_failed)
+        AppException.GoogleAccountNotFound -> context.getString(R.string.error_google_account_not_found)
+        AppException.GoogleAuthCancelled -> context.getString(R.string.error_google_auth_cancelled)
+        AppException.GoogleAuthFailed -> context.getString(R.string.error_google_auth_failed)
 
-        is AuthException.UnknownError -> {
+        is AppException.UnknownError -> {
             val baseMessage = context.getString(R.string.error_unknown)
             exception.errorMessage?.let { message -> "$baseMessage: $message" } ?: baseMessage
         }

@@ -11,7 +11,6 @@ data class SignInUiState(
     val isPasswordValid: Boolean = true,
     val isEmailTouched: Boolean = false,
     val passwordRules: List<PasswordRuleUi> = emptyList(),
-    val navigationEvent: SignInNavigationEvent? = null,
 ) {
     val showEmailError: Boolean
         get() = isEmailTouched && !isEmailValid && email.isNotBlank()
@@ -24,12 +23,4 @@ data class SignInUiState(
 
     val canSignIn: Boolean
         get() = email.isNotBlank() && isEmailValid && password.isNotBlank() && isPasswordValid
-}
-
-
-
-sealed interface SignInNavigationEvent {
-    data object NavigateToForgotPassword : SignInNavigationEvent
-    data object NavigateToSignUp : SignInNavigationEvent
-    data object NavigateToHome : SignInNavigationEvent
 }

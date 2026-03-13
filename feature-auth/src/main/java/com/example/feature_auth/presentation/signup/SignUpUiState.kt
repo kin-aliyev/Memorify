@@ -13,7 +13,6 @@ data class SignUpUiState(
     val isConfirmPasswordValid: Boolean = true,
     val isEmailTouched: Boolean = false,
     val passwordRules: List<PasswordRuleUi> = emptyList(),
-    val navigationEvent: SignUpNavigationEvent? = null,
 ) {
     val showEmailError: Boolean
         get() = isEmailTouched && !isEmailValid && email.isNotBlank()
@@ -30,6 +29,3 @@ data class SignUpUiState(
                 confirmPassword.isNotBlank() && isConfirmPasswordValid
 }
 
-sealed interface SignUpNavigationEvent{
-    data object NavigateToHome : SignUpNavigationEvent
-}

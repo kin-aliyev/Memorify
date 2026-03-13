@@ -2,7 +2,9 @@ package com.example.feature_auth.presentation.signup.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -13,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.memorify.feature_auth.R
-import com.example.core_ui.components.Dimens
-import com.example.core_ui.components.Dimens.elevation2
-import com.example.core_ui.components.PrimaryButton
+import com.example.core_ui.Dimens
+import com.example.core_ui.Dimens.elevation2
+import com.example.core_ui.common.PrimaryButton
 import com.example.core_ui.theme.MemorifyTheme
 import com.example.feature_auth.presentation.signup.SignUpAction
 import com.example.feature_auth.presentation.signup.SignUpUiState
@@ -64,6 +66,8 @@ fun SignUpForm(
                 enabled = !uiState.isLoading,
                 rulesUi = emptyList()
             )
+
+            Spacer(Modifier.height(Dimens.spacing4))
 
             PrimaryButton(
                 label = stringResource(R.string.sign_up),

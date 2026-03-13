@@ -20,20 +20,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MemorifyTheme {
-                MemorifyApp()
+                MainScreen()
             }
         }
     }
 }
 
-@Composable
-private fun MemorifyApp() {
-    val navController = rememberNavController()
 
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        MainNavigation(
-            navController = navController,
-            modifier = Modifier.padding(innerPadding)
-        )
-    }
-}

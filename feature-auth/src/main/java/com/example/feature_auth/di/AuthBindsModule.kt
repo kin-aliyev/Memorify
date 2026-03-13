@@ -1,7 +1,7 @@
 package com.example.feature_auth.di
 
-import  com.example.feature_auth.data.remote.provider.AndroidGoogleTokenProvider
-import com.example.feature_auth.data.repository.AuthRepositoryImpl
+import  com.example.feature_auth.data.provider.AndroidGoogleTokenProvider
+import com.example.core_data.repository.AuthRepositoryImpl
 import com.example.feature_auth.data.validation.EmailValidatorImpl
 import com.example.feature_auth.data.validation.PasswordValidatorImpl
 import com.example.feature_auth.domain.provider.AuthStringProvider
@@ -19,11 +19,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AuthBindsModule {
-
-    @Binds
-    @Singleton
-    abstract fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
-
     @Binds
     @Singleton
     abstract fun bindEmailValidator(impl: EmailValidatorImpl): EmailValidator

@@ -14,7 +14,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.core_ui.components.StandardTextField
+import com.example.core_ui.common.StandardTextField
 import com.example.core_ui.theme.MemorifyTheme
 import com.example.memorify.feature_auth.R
 

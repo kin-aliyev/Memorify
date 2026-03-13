@@ -29,3 +29,4 @@ include(":core:core-ui")
 
 include(":feature-auth")
 
+include(":feature-home")
