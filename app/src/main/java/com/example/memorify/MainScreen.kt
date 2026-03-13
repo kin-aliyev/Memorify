@@ -14,8 +14,8 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.core_ui.components.scaffold.MainBottomBar
-import com.example.core_ui.components.scaffold.MainTopBar
+import com.example.core_ui.common.scaffold.MainBottomBar
+import com.example.core_ui.common.scaffold.MainTopBar
 import com.example.core_ui.model.TopBarState
 import com.example.core_ui.navigation.GraphRoute
 
@@ -48,7 +48,8 @@ internal fun MainScreen() {
                     }
                 )
             }
-        }
+        },
+        floatingActionButton = { topBarState.fab?.invoke() }
     ) { innerPadding ->
         MainNavigation(
             navController = navController,
