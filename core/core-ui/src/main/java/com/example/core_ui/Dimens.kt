@@ -42,6 +42,7 @@ object Dimens {
     val heightTab       = 48.dp
     val heightTextField = 56.dp
     val heightListItem  = 56.dp
+    val heightCollectionItem  = 76.dp
     val heightTopAppBar    = 64.dp
     val heightNavigationBar = 80.dp
 
@@ -75,6 +76,7 @@ object Dimens {
     val iconMd = 24.dp
     val iconLg = 32.dp
     val iconXl = 56.dp
+    val iconXxl = 80.dp
 
     // ════════════════════════════════════════════════════════
     // FAB SIZES — FloatingActionButton

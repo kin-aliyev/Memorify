@@ -15,154 +15,35 @@ val InterFontFamily = FontFamily(
 )
 
 fun Typography.withFontFamily(fontFamily: FontFamily) = copy(
-    displayLarge = displayLarge.copy(fontFamily = fontFamily),
-    displayMedium = displayMedium.copy(fontFamily = fontFamily),
-    displaySmall = displaySmall.copy(fontFamily = fontFamily),
-    headlineLarge = headlineLarge.copy(fontFamily = fontFamily),
-    headlineMedium = headlineMedium.copy(fontFamily = fontFamily),
-    headlineSmall = headlineSmall.copy(fontFamily = fontFamily),
-    titleLarge = titleLarge.copy(fontFamily = fontFamily),
-    titleMedium = titleMedium.copy(fontFamily = fontFamily),
-    titleSmall = titleSmall.copy(fontFamily = fontFamily),
-    bodyLarge = bodyLarge.copy(fontFamily = fontFamily),
-    bodyMedium = bodyMedium.copy(fontFamily = fontFamily),
-    bodySmall = bodySmall.copy(fontFamily = fontFamily),
-    labelLarge = labelLarge.copy(fontFamily = fontFamily),
-    labelMedium = labelMedium.copy(fontFamily = fontFamily),
-    labelSmall = labelSmall.copy(fontFamily = fontFamily),
+    // DISPLAY — самые крупные, декоративные заголовки
+    // Используй для: hero-секций, splash экранов, пустых состояний
+    displayLarge = displayLarge.copy(fontFamily = fontFamily), // 57sp — огромный заголовок на весь экран
+    displayMedium = displayMedium.copy(fontFamily = fontFamily), // 45sp — крупный акцентный текст
+    displaySmall = displaySmall.copy(fontFamily = fontFamily), // 36sp — подзаголовок hero-секции
+
+    // HEADLINE — заголовки экранов и секций
+    // Используй для: заголовок экрана, заголовок диалога, крупные числа
+    headlineLarge = headlineLarge.copy(fontFamily = fontFamily), // 32sp — главный заголовок экрана, крупные цифры
+    headlineMedium = headlineMedium.copy(fontFamily = fontFamily), // 28sp — заголовок диалога, bottom sheet
+    headlineSmall = headlineSmall.copy(fontFamily = fontFamily), // 24sp — заголовок секции внутри экрана
+
+    // TITLE — заголовки компонентов
+    // Используй для: названия карточек, TopAppBar, список-заголовки
+    titleLarge = titleLarge.copy(fontFamily = fontFamily), // 22sp — TopAppBar title, названия разделов
+    titleMedium = titleMedium.copy(fontFamily = fontFamily), // 16sp — название карточки, ListItem primary (твой label)
+    titleSmall = titleSmall.copy(fontFamily = fontFamily), // 14sp — подзаголовок карточки, chips
+
+    // BODY — основной текст
+    // Используй для: длинный текст, описания, контент статей
+    bodyLarge = bodyLarge.copy(fontFamily = fontFamily), // 16sp — основной текст статьи, описание
+    bodyMedium = bodyMedium.copy(fontFamily = fontFamily), // 14sp — вторичный текст, описание карточки
+    bodySmall = bodySmall.copy(fontFamily = fontFamily), // 12sp — сноски, вспомогательный текст
+
+    // LABEL — мелкие подписи и компоненты
+    // Используй для: кнопки, chips, метки, вспомогательные подписи
+    labelLarge = labelLarge.copy(fontFamily = fontFamily), // 14sp — текст кнопки Button
+    labelMedium = labelMedium.copy(fontFamily = fontFamily), // 12sp — NavigationBar label, chip text
+    labelSmall = labelSmall.copy(fontFamily = fontFamily), // 11sp — временные метки, счётчики (твой formattedDate)
 )
 
 val Typography = Typography().withFontFamily(InterFontFamily)
-// Set of Material typography styles to start with
-//val Typography = Typography(
-//    // ─────────────────────────────────────────────────────────
-//    // DISPLAY — Героический декоративный текст
-//    // Где: онбординг, экран результата ("🎉 Отлично!"),
-//    //      splash screen, пустые состояния с большим акцентом.
-//    // Не используй для обычных заголовков экранов.
-//    // ─────────────────────────────────────────────────────────
-//    displayLarge = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.ExtraBold,
-//        fontSize = 36.sp,
-//        lineHeight = 44.sp,
-//    ),
-//    displayMedium = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.ExtraBold,
-//        fontSize = 30.sp,
-//        lineHeight = 38.sp,
-//    ),
-//    displaySmall = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Bold,
-//        fontSize = 26.sp,
-//        lineHeight = 34.sp,
-//    ),
-//
-//    // ─────────────────────────────────────────────────────────
-//    // HEADLINE — Заголовки экранов и крупных секций
-//    // Где:
-//    //   headlineLarge  → "Sign In", "Sign Up" — главный заголовок экрана
-//    //   headlineMedium → заголовок диалога, боттом-шита
-//    //   headlineSmall  → заголовок вложенного раздела внутри экрана
-//    // ─────────────────────────────────────────────────────────
-//    headlineLarge = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Bold,
-//        fontSize = 28.sp,
-//        lineHeight = 36.sp,
-//    ),
-//    headlineMedium = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Bold,
-//        fontSize = 24.sp,
-//        lineHeight = 32.sp,
-//    ),
-//    headlineSmall = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Bold,
-//        fontSize = 20.sp,
-//        lineHeight = 28.sp,
-//    ),
-//
-//    // ─────────────────────────────────────────────────────────
-//    // TITLE — Подзаголовки, навигация, метки компонентов
-//    // Где:
-//    //   titleLarge  → TopAppBar title, название карточки-флэшкарты
-//    //   titleMedium → Label над TextField ("Email", "Password"), заголовок элемента списка, название секции
-//    //   titleSmall  → Вторичный подзаголовок, caption к карточке, Selected tab label
-//    // ─────────────────────────────────────────────────────────
-//    titleLarge = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.SemiBold,
-//        fontSize = 18.sp,
-//        lineHeight = 26.sp,
-//    ),
-//    titleMedium = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Medium,
-//        fontSize = 15.sp,
-//        lineHeight = 22.sp,
-//    ),
-//    titleSmall = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Medium,
-//        fontSize = 13.sp,
-//        lineHeight = 18.sp,
-//    ),
-//
-//    // ─────────────────────────────────────────────────────────
-//    // BODY — Весь читаемый пользователем контент
-//    // Где:
-//    //   bodyLarge  → Контент флэшкарты (вопрос / ответ), основной текст в длинных описаниях
-//    //   bodyMedium → Placeholder внутри TextField, описания, вторичный текст в списках под заголовком
-//    //   bodySmall  → Мелкие описания, метаданные (дата, счётчик), текст в тултипах
-//    // ─────────────────────────────────────────────────────────
-//    bodyLarge = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 16.sp,
-//        lineHeight = 25.sp, // чуть больше для комфортного чтения длинных текстов
-//    ),
-//    bodyMedium = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 14.sp,
-//        lineHeight = 22.sp,
-//    ),
-//    bodySmall = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 12.sp,
-//        lineHeight = 18.sp,
-//    ),
-//
-//    // ─────────────────────────────────────────────────────────
-//    // LABEL — UI-элементы управления, не для чтения
-//    // Где:
-//    //   labelLarge  → Текст кнопок (Button), текст таба
-//    //   labelMedium → Чипы, badge, текст в SnackBar, error/helper text под TextField
-//    //   labelSmall  → Самые мелкие подписи: счётчик символов, текст на иконке-нотификации, watermark
-//    // ─────────────────────────────────────────────────────────
-//    labelLarge = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.SemiBold,
-//        fontSize = 14.sp,
-//        lineHeight = 20.sp,
-//    ),
-//    labelMedium = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Medium,
-//        fontSize = 12.sp,
-//        lineHeight = 16.sp,
-//        letterSpacing = 0.1.sp,
-//    ),
-//    labelSmall = TextStyle(
-//        fontFamily = InterFontFamily,
-//        fontWeight = FontWeight.Medium,
-//        fontSize = 11.sp,
-//        lineHeight = 16.sp,
-//        letterSpacing = 0.2.sp,
-//    ),
-//)

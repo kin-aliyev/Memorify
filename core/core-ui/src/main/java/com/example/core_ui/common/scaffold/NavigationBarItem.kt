@@ -1,4 +1,4 @@
-package com.example.core_ui.components.scaffold
+package com.example.core_ui.common.scaffold
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.CubicBezierEasing

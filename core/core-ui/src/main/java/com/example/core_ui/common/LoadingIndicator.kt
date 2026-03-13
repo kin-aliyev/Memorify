@@ -1,4 +1,4 @@
-package com.example.core_ui.components
+package com.example.core_ui.common
 
 import androidx.compose.animation.core.EaseInOutCubic
 import androidx.compose.animation.core.LinearEasing
@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,48 +36,14 @@ import com.example.core_ui.Dimens
 import com.example.core_ui.theme.MemorifyTheme
 
 
-/**
- * Variants for future extensibility (e.g. Dots, Linear)
- */
-enum class LoadingVariant {
-    Circular
-}
-
-/**
- * Reusable loading indicator with multiple variants
- */
 @Composable
 fun LoadingIndicator(
     modifier: Modifier = Modifier,
-    isLoading: Boolean,
-    variant: LoadingVariant = LoadingVariant.Circular,
     size: Dp = Dimens.iconLg,
     color: Color = MaterialTheme.colorScheme.primary,
     strokeWidth: Dp = 3.dp,
 ) {
-    if (!isLoading) return
-
-    when (variant) {
-        LoadingVariant.Circular -> CircularLoadingIndicator(
-            modifier = modifier,
-            size = size,
-            color = color,
-            strokeWidth = strokeWidth
-        )
-    }
-}
-
-/**
- * Circular loading indicator with smooth animation
- */
-@Composable
-private fun CircularLoadingIndicator(
-    modifier: Modifier = Modifier,
-    size: Dp = Dimens.iconLg,
-    color: Color = MaterialTheme.colorScheme.primary,
-    strokeWidth: Dp = 3.dp,
-) {
-    val infiniteTransition = rememberInfiniteTransition("circular_loading")
+    val infiniteTransition = rememberInfiniteTransition("loading")
 
     val rotationAngle by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -84,7 +51,7 @@ private fun CircularLoadingIndicator(
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1400, easing = LinearEasing),
         ),
-        label = "rotation"
+        label = "rotation",
     )
 
     val sweepAngle by infiniteTransition.animateFloat(
@@ -92,20 +59,19 @@ private fun CircularLoadingIndicator(
         targetValue = 270f,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1400, easing = EaseInOutCubic),
-            repeatMode = RepeatMode.Reverse
+            repeatMode = RepeatMode.Reverse,
         ),
-        label = "sweep"
+        label = "sweep",
     )
 
-    Canvas(
-        modifier = modifier.size(size)
-    ) {
+
+    Canvas(modifier = modifier.size(size)) {
         drawArc(
             color = color,
             startAngle = rotationAngle,
             sweepAngle = sweepAngle,
             useCenter = false,
-            style = Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round)
+            style = Stroke(width = strokeWidth.toPx(), cap = StrokeCap.Round),
         )
     }
 }
@@ -118,7 +84,6 @@ fun LoadingOverlay(
     isLoading: Boolean,
     modifier: Modifier = Modifier,
     message: String? = null,
-    variant: LoadingVariant = LoadingVariant.Circular
 ) {
     if (!isLoading) return
 
@@ -128,24 +93,16 @@ fun LoadingOverlay(
             .background(MaterialTheme.colorScheme.scrim.copy(0.32f)),
         contentAlignment = Alignment.Center
     ) {
-        Card(
-            modifier = Modifier
-                .wrapContentSize(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-            ),
-            elevation = CardDefaults.cardElevation(Dimens.elevation2)
+        Surface(
+            shape = MaterialTheme.shapes.large,
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
         ) {
             Column(
                 modifier = Modifier.padding(Dimens.spacing24),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(Dimens.paddingMd)
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacing16)
             ) {
-                LoadingIndicator(
-                    isLoading = true,
-                    variant = variant,
-                    size = Dimens.iconXl,
-                )
+                LoadingIndicator(size = Dimens.iconXl,)
 
                 message?.let {
                     Text(
@@ -168,7 +125,6 @@ fun LoadingOverlay(
 private fun LoadingIndicatorPreview() {
     MemorifyTheme {
         Column(
-            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 //            LoadingIndicator(isLoading = true, variant = LoadingVariant.Circular)

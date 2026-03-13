@@ -1,4 +1,4 @@
-package com.example.core_ui.components
+package com.example.core_ui.common
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -113,7 +113,6 @@ fun BaseButton(
     ) {
         if (isLoading) {
             LoadingIndicator(
-                isLoading = true,
                 color = loaderColor,
                 size = Dimens.iconMd,
                 strokeWidth = 2.dp,

@@ -1,4 +1,4 @@
-package com.example.core_ui.components
+package com.example.core_ui.common
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement

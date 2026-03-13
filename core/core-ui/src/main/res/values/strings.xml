@@ -2,7 +2,15 @@
 <resources>
     <string name="app_name">Memorify</string>
 
+    <!-- Navigation Bar -->
     <string name="nav_home">Home</string>
     <string name="nav_analytics">Analytics</string>
     <string name="nav_settings">Settings</string>
+
+    <!-- Date formatter -->
+    <string name="last_used_today">last used · today</string>
+    <string name="last_used_yesterday">last used · yesterday</string>
+    <string name="last_used_days_ago">last used · %1$dd ago</string>
+    <string name="last_used_weeks_ago">last used · %1$dw ago</string>
+    <string name="last_used_date">last used · %1$s</string>
 </resources>
