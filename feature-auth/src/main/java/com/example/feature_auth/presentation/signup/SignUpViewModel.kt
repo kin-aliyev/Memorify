@@ -9,8 +9,11 @@ import com.example.feature_auth.domain.validation.EmailValidator
 import com.example.feature_auth.domain.validation.PasswordValidator
 import com.example.feature_auth.presentation.mapper.mapPasswordRules
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,7 +31,15 @@ class SignUpViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
 
-    fun handleAction(action: SignUpAction) = when (action) {
+    private val _navigationEvent = MutableSharedFlow<SignUpNavigationEvent>()
+    val navigationEvent: SharedFlow<SignUpNavigationEvent> = _navigationEvent.asSharedFlow()
+
+    fun navigate(event: SignUpNavigationEvent) {
+        _uiState.update { it.copy(isLoading = false) }
+        viewModelScope.launch { _navigationEvent.emit(event) }
+    }
+
+    fun onAction(action: SignUpAction) = when (action) {
         is SignUpAction.UpdateEmail -> updateEmail(action.email)
         is SignUpAction.UpdatePassword -> updatePassword(action.password)
         is SignUpAction.UpdateConfirmPassword -> updateConfirmPassword(action.confirmPassword)
@@ -88,11 +99,11 @@ class SignUpViewModel @Inject constructor(
     private fun signUpWithEmail() {
         _uiState.update { it.copy(isEmailTouched = true) }
         viewModelScope.launch {
-            setLoadingState(true)
+            _uiState.update { it.copy(isLoading = true) }
 
             val state = _uiState.value
             signUpWithEmailUseCase(state.email, state.password, state.confirmPassword)
-                .onSuccess { navigateToHome() }
+                .onSuccess { navigate(SignUpNavigationEvent.ToHome) }
                 .onFailure(::handleError)
         }
     }
@@ -107,23 +118,5 @@ class SignUpViewModel @Inject constructor(
                 errorMessage = errorMessage
             )
         }
-    }
-
-    private fun navigateToHome() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                isLoading = false,
-                errorMessage = null,
-                navigationEvent = SignUpNavigationEvent.NavigateToHome
-            )
-        }
-    }
-
-    private fun setLoadingState(isLoading: Boolean) {
-        _uiState.update { it.copy(isLoading = isLoading) }
-    }
-
-    fun onNavigationHandled(){
-        _uiState.update { it.copy(navigationEvent = null) }
     }
 }

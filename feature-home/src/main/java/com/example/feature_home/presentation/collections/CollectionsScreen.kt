@@ -1,4 +1,4 @@
-package com.example.feature_home.presentation.home
+package com.example.feature_home.presentation.collection
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

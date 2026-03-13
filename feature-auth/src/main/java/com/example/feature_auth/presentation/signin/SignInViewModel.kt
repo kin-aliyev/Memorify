@@ -11,8 +11,11 @@ import com.example.feature_auth.domain.usecase.auth.SignInWithEmailUseCase
 import com.example.feature_auth.domain.usecase.auth.SignInWithGoogleUseCase
 import com.example.feature_auth.presentation.mapper.mapPasswordRules
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -31,14 +34,17 @@ class SignInViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(SignInUiState())
     val uiState: StateFlow<SignInUiState> = _uiState.asStateFlow()
 
+    private val _navigationEvent = MutableSharedFlow<SignInNavigationEvent>()
+    val navigationEvent: SharedFlow<SignInNavigationEvent> = _navigationEvent.asSharedFlow()
+
     fun onAction(action: SignInAction) {
         when (action) {
             is SignInAction.UpdateEmail -> updateEmail(action.email)
             is SignInAction.UpdatePassword -> updatePassword(action.password)
             SignInAction.SignInWithEmail -> { signInWithEmail() }
             is SignInAction.SignInWithGoogle -> signInWithGoogle(action.context)
-            SignInAction.ForgotPassword -> navigateToForgotPassword()
-            SignInAction.CreateAccount -> navigateToSignUp()
+            SignInAction.ForgotPassword -> navigate(SignInNavigationEvent.ToForgotPassword)
+            SignInAction.CreateAccount -> navigate(SignInNavigationEvent.ToSignUp)
             SignInAction.EmailFocusLost -> { _uiState.update { it.copy(isEmailTouched = true) } }
         }
     }
@@ -71,21 +77,21 @@ class SignInViewModel @Inject constructor(
     private fun signInWithEmail() {
         _uiState.update { it.copy(isEmailTouched = true) }
         viewModelScope.launch {
-            setLoadingState(true)
+            _uiState.update { it.copy(isLoading = true) }
 
             val state = _uiState.value
             signInWithEmailUseCase(state.email, state.password)
-                .onSuccess { navigateToHome() }
+                .onSuccess { navigate(SignInNavigationEvent.ToHome) }
                 .onFailure(::handleError)
         }
     }
 
     private fun signInWithGoogle(context: Context) {
         viewModelScope.launch {
-            setLoadingState(true)
+            _uiState.update { it.copy(isLoading = true) }
 
             signInWithGoogleUseCase(context)
-                .onSuccess { navigateToHome() }
+                .onSuccess { navigate(SignInNavigationEvent.ToHome) }
                 .onFailure(::handleError)
         }
     }
@@ -102,35 +108,9 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    private fun navigateToHome() {
-        _uiState.update {
-            it.copy(
-                isLoading = false,
-                errorMessage = null,
-                navigationEvent = SignInNavigationEvent.NavigateToHome
-            )
-        }
-    }
-
-    private fun navigateToForgotPassword() {
-        _uiState.update {
-            it.copy(navigationEvent = SignInNavigationEvent.NavigateToForgotPassword)
-        }
-    }
-
-    private fun navigateToSignUp() {
-        _uiState.update {
-            it.copy(navigationEvent = SignInNavigationEvent.NavigateToSignUp)
-        }
-    }
-
-
-    private fun setLoadingState(isLoading: Boolean) {
-        _uiState.update { it.copy(isLoading = isLoading) }
-    }
-
-    fun onNavigationHandled(){
-        _uiState.update { it.copy(navigationEvent = null) }
+    private fun navigate(event: SignInNavigationEvent) {
+        _uiState.update { it.copy(isLoading = false) }
+        viewModelScope.launch { _navigationEvent.emit(event) }
     }
 }
 

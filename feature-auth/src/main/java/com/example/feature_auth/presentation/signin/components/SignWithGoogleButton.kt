@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.memorify.feature_auth.R
-import com.example.core_ui.components.BaseButton
+import com.example.core_ui.common.BaseButton
 import com.example.core_ui.Dimens
 
 
