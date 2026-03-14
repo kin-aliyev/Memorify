@@ -7,7 +7,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 fun WordCard.toMap(): Map<String, Any?> = mapOf(
     "id" to id,
-    "deckId" to deckId,
+    "deckId" to collectionId,
     "word" to word,
     "translation" to translation,
     "description" to description,
@@ -35,7 +35,7 @@ fun DocumentSnapshot.toWordCard(): WordCard? = try {
     val srsMap = get("srs") as? Map<String, Any> ?: emptyMap()
     WordCard(
         id = getString("id") ?: return null,
-        deckId = getString("deckId") ?: return null,
+        collectionId = getString("deckId") ?: return null,
         word = getString("word") ?: "",
         translation = getString("translation") ?: "",
         description = getString("description") ?: "",

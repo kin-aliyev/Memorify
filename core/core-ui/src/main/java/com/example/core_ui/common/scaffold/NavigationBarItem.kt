@@ -19,9 +19,12 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Analytics
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.CollectionsBookmark
+import androidx.compose.material.icons.outlined.Insights
+import androidx.compose.material.icons.outlined.Tune
+import androidx.compose.material.icons.rounded.CollectionsBookmark
+import androidx.compose.material.icons.rounded.Insights
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -48,11 +51,12 @@ private const val NavAnimationDuration = 350
 
 @Composable
 fun NavigationBarItem(
+    modifier: Modifier = Modifier,
     selected: Boolean,
     onClick: () -> Unit,
     icon: ImageVector,
+    iconSelected: ImageVector = icon,
     label: String,
-    modifier: Modifier = Modifier,
 ) {
     val contentColor by animateColorAsState(
         targetValue = if (selected) MaterialTheme.colorScheme.primary
@@ -110,9 +114,10 @@ fun NavigationBarItem(
             )
             
             Icon(
-                imageVector = icon, contentDescription = null,
+                imageVector = if (selected) iconSelected else icon,
+                contentDescription = null,
                 tint = contentColor,
-                modifier = Modifier.Companion.size(Dimens.iconMd)
+                modifier = Modifier.size(Dimens.iconMd)
             )
         }
 
@@ -144,20 +149,23 @@ private fun NavigationBarItemPreview() {
             NavigationBarItem(
                 selected = selectedItem == 0,
                 onClick = { selectedItem = 0 },
-                icon = Icons.Default.Home,
-                label = "Home"
+                icon = Icons.Outlined.CollectionsBookmark,
+                iconSelected = Icons.Rounded.CollectionsBookmark,
+                label = "Home",
             )
             NavigationBarItem(
                 selected = selectedItem == 1,
                 onClick = { selectedItem = 1 },
-                icon = Icons.Default.Analytics,
-                label = "Analytics"
+                icon = Icons.Outlined.Insights,
+                iconSelected = Icons.Rounded.Insights,
+                label = "Analytics",
             )
             NavigationBarItem(
                 selected = selectedItem == 2,
                 onClick = { selectedItem = 2 },
-                icon = Icons.Default.Settings,
-                label = "Settings"
+                icon = Icons.Outlined.Tune,
+                iconSelected = Icons.Rounded.Tune,
+                label = "Settings",
             )
         }
     }

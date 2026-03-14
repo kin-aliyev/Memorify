@@ -79,13 +79,13 @@ fun CollectionsScreen(
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
             when (event) {
-                is CollectionsNavigationEvent.ToCollectionDetail -> onNavigateToCollectionDetail(
-                    event.deckId
-                )
-
                 CollectionsNavigationEvent.ToAddCollection -> onNavigateToAddCollection()
                 CollectionsNavigationEvent.ToAddManual -> onNavigateToAddManual()
                 CollectionsNavigationEvent.ToAddAi -> onNavigateToAddAi()
+
+                is CollectionsNavigationEvent.ToCollectionDetail -> onNavigateToCollectionDetail(
+                    event.collectionId
+                )
             }
         }
     }
@@ -133,7 +133,7 @@ private fun SpeedDialExpandedPreview() {
             selectedNavItem = BottomNavItem.Home,
         ) { innerPadding ->
             CollectionsScreenContent(
-                uiState = CollectionsUiState(decks = emptyList(), isLoading = false),
+                uiState = CollectionsUiState(collections = emptyList(), isLoading = false),
                 onAction = {},
                 modifier = Modifier.padding(innerPadding),
             )

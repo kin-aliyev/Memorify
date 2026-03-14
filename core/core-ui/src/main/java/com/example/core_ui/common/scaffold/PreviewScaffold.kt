@@ -20,8 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.core_ui.Dimens
-import com.example.core_ui.model.TopBarState
 import com.example.core_ui.model.BottomNavItem
+import com.example.core_ui.model.TopBarState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,6 +55,7 @@ fun PreviewScaffold(
                                 selected = item == selectedNavItem,
                                 onClick = {},
                                 icon = item.icon,
+                                iconSelected = item.iconSelected,
                                 label = stringResource(item.labelRes),
                                 modifier = Modifier.weight(1f)
                             )

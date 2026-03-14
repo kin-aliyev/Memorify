@@ -18,6 +18,7 @@ import com.example.core_ui.common.scaffold.MainBottomBar
 import com.example.core_ui.common.scaffold.MainTopBar
 import com.example.core_ui.model.TopBarState
 import com.example.core_ui.navigation.GraphRoute
+import com.example.memorify.navigation.MainNavigation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

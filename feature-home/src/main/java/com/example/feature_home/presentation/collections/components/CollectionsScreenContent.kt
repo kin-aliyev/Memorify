@@ -36,7 +36,7 @@ import com.example.feature_home.presentation.collections.CollectionsAction
 import com.example.feature_home.presentation.collections.CollectionsUiState
 import com.example.feature_home.presentation.common.SpeedDialFab
 import com.example.feature_home.presentation.common.SpeedDialItem
-import com.example.feature_home.presentation.model.DeckUiModel
+import com.example.feature_home.presentation.model.CollectionUiModel
 
 @Composable
 fun CollectionsScreenContent(
@@ -50,7 +50,7 @@ fun CollectionsScreenContent(
                 LoadingOverlay(isLoading = uiState.isLoading)
             }
 
-            uiState.decks.isEmpty() -> {
+            uiState.collections.isEmpty() -> {
                 Column(
                     modifier = Modifier.align(Alignment.Center),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -81,8 +81,17 @@ fun CollectionsScreenContent(
                         vertical = Dimens.spacing16,
                     )
                 ) {
+                    item {
+                        Text(
+                            text = "Your collections",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.padding(bottom = Dimens.spacing8),
+                        )
+                    }
+
                     items(
-                        items = uiState.decks,
+                        items = uiState.collections,
                         key = { deck -> deck.id }
                     ) { deck ->
                         CollectionItem(
@@ -125,7 +134,7 @@ private fun CollectionsEmptyPreview() {
             selectedNavItem = BottomNavItem.Home,
         ) { innerPadding ->
             CollectionsScreenContent(
-                uiState = CollectionsUiState(decks = emptyList(), isLoading = false),
+                uiState = CollectionsUiState(collections = emptyList(), isLoading = false),
                 onAction = {},
                 modifier = Modifier.padding(innerPadding),
             )
@@ -170,8 +179,8 @@ private fun CollectionsWithDataPreview() {
             CollectionsScreenContent(
                 uiState = CollectionsUiState(
                     isLoading = false,
-                    decks = listOf(
-                        DeckUiModel(
+                    collections = listOf(
+                        CollectionUiModel(
                             id = "1",
                             name = "English Basics",
                             emoji = "📚",
@@ -179,7 +188,7 @@ private fun CollectionsWithDataPreview() {
                             reviewedWords = 45,
                             lastStudiedAt = System.currentTimeMillis() - 3 * 24 * 60 * 60 * 1000L,
                         ),
-                        DeckUiModel(
+                        CollectionUiModel(
                             id = "2",
                             name = "Spanish Travel",
                             emoji = "✈️",
@@ -187,7 +196,7 @@ private fun CollectionsWithDataPreview() {
                             reviewedWords = 50,
                             lastStudiedAt = System.currentTimeMillis() - 10 * 24 * 60 * 60 * 1000L,
                         ),
-                        DeckUiModel(
+                        CollectionUiModel(
                             id = "3",
                             name = "Tech Terms",
                             emoji = "💻",
@@ -195,7 +204,7 @@ private fun CollectionsWithDataPreview() {
                             reviewedWords = 0,
                             lastStudiedAt = null,
                         ),
-                        DeckUiModel(
+                        CollectionUiModel(
                             id = "11",
                             name = "Russian Basics",
                             emoji = "📚",
@@ -203,7 +212,7 @@ private fun CollectionsWithDataPreview() {
                             reviewedWords = 45,
                             lastStudiedAt = System.currentTimeMillis() - 3 * 24 * 60 * 60 * 1000L,
                         ),
-                        DeckUiModel(
+                        CollectionUiModel(
                             id = "21",
                             name = "China Travel",
                             emoji = "✈️",
@@ -211,7 +220,7 @@ private fun CollectionsWithDataPreview() {
                             reviewedWords = 50,
                             lastStudiedAt = System.currentTimeMillis() - 10 * 24 * 60 * 60 * 1000L,
                         ),
-                        DeckUiModel(
+                        CollectionUiModel(
                             id = "32",
                             name = "Backend Terms",
                             emoji = "💻",

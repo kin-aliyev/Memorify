@@ -8,6 +8,5 @@ import javax.inject.Inject
 class GetWordsUseCase @Inject constructor(
     private val wordRepository: WordRepository
 ) {
-    operator fun invoke(deckId: String): Flow<List<WordCard>> =
-        wordRepository.getWords(deckId)
+    operator fun invoke(deckId: String): Flow<List<WordCard>> = wordRepository.getWords(deckId)
 }

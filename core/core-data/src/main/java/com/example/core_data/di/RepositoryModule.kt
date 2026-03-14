@@ -1,10 +1,10 @@
 package com.example.core_data.di
 
 import com.example.core_data.repository.AuthRepositoryImpl
-import com.example.core_data.repository.DeckRepositoryImpl
+import com.example.core_data.repository.CollectionRepositoryImpl
 import com.example.core_data.repository.WordRepositoryImpl
 import com.example.core_domain.repository.AuthRepository
-import com.example.core_domain.repository.DeckRepository
+import com.example.core_domain.repository.CollectionRepository
 import com.example.core_domain.repository.WordRepository
 import dagger.Binds
 import dagger.Module
@@ -25,8 +25,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindDeckRepository(
-        impl: DeckRepositoryImpl
-    ): DeckRepository
+        impl: CollectionRepositoryImpl
+    ): CollectionRepository
 
     @Binds
     @Singleton

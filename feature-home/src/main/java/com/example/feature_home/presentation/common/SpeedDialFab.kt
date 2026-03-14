@@ -74,8 +74,8 @@ fun SpeedDialFab(
         FloatingActionButton(
             onClick = onToggle,
             shape = MaterialTheme.shapes.extraLarge,
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             elevation = FloatingActionButtonDefaults.elevation(
                 defaultElevation = Dimens.elevation3,
                 pressedElevation = Dimens.elevation4,
@@ -107,7 +107,7 @@ private fun SpeedDialOption(
     ) {
         Surface(
             shape = MaterialTheme.shapes.small,
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            color = MaterialTheme.colorScheme.surfaceContainerHighest,
             shadowElevation = Dimens.elevation1,
         ) {
             Text(
@@ -124,8 +124,8 @@ private fun SpeedDialOption(
         SmallFloatingActionButton(
             onClick = item.onClick,
             shape = MaterialTheme.shapes.extraLarge,
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             elevation = FloatingActionButtonDefaults.elevation(defaultElevation = Dimens.elevation2)
         ) {
             Icon(

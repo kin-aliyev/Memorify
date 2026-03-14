@@ -1,11 +1,11 @@
 package com.example.core_data.mapper
 
-import com.example.core_domain.model.deck.Deck
-import com.example.core_domain.model.deck.DeckColor
+import com.example.core_domain.model.deck.Collection
+import com.example.core_domain.model.deck.CollectionColor
 import com.example.core_domain.model.deck.Language
 import com.google.firebase.firestore.DocumentSnapshot
 
-fun Deck.toMap(): Map<String, Any?> = mapOf(
+fun Collection.toMap(): Map<String, Any?> = mapOf(
     "id" to id,
     "name" to name,
     "emoji" to emoji,
@@ -17,12 +17,12 @@ fun Deck.toMap(): Map<String, Any?> = mapOf(
     "createdAt" to createdAt
 )
 
-fun DocumentSnapshot.toDeck(): Deck? = try {
-    Deck(
+fun DocumentSnapshot.toDeck(): Collection? = try {
+    Collection(
         id = getString("id") ?: return null,
         name = getString("name") ?: "",
         emoji = getString("emoji") ?: "📚",
-        color = getString("color") ?: DeckColor.ORANGE.name,
+        color = getString("color") ?: CollectionColor.ORANGE.name,
         sourceLanguage = getString("sourceLanguage") ?: Language.RUSSIAN.code,
         targetLanguage = getString("targetLanguage") ?: Language.ENGLISH.code,
         wordCount = getLong("wordCount")?.toInt() ?: 0,

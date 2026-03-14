@@ -48,7 +48,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    api(libs.androidx.compose.material.icons.extended) // api если ImageVector в публичных параметрах
+    implementation(libs.androidx.compose.material.icons.extended)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 

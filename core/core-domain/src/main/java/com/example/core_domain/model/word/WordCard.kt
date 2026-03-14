@@ -3,7 +3,7 @@ package com.example.core_domain.model.word
 data class WordCard(
     // Identification
     val id: String = "",
-    val deckId: String = "",
+    val collectionId: String = "",
 
     // Content
     val word: String = "",

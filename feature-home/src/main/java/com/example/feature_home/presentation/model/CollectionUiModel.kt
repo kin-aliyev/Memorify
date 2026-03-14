@@ -1,8 +1,8 @@
 package com.example.feature_home.presentation.model
 
-import com.example.core_domain.model.deck.Deck
+import com.example.core_domain.model.deck.Collection
 
-data class DeckUiModel(
+data class CollectionUiModel(
     val id: String,
     val name: String,
     val emoji: String,
@@ -11,7 +11,7 @@ data class DeckUiModel(
     val lastStudiedAt: Long?
 )
 
-fun Deck.toUiModel() = DeckUiModel(
+fun Collection.toUiModel() = CollectionUiModel(
     id = id,
     name = name,
     emoji = emoji,

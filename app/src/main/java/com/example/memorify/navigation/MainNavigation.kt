@@ -1,4 +1,4 @@
-package com.example.memorify
+package com.example.memorify.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,9 +32,9 @@ fun MainNavigation(
         )
 
         homeNavGraph(
-            onSetTopBar = onSetTopBar,
+            navController = navController,
+            onSetTopBar = onSetTopBar
         )
-
 
     }
 }
