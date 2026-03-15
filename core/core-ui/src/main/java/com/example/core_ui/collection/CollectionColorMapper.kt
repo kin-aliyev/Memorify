@@ -1,7 +1,7 @@
-package com.example.core_ui.deck
+package com.example.core_ui.collection
 
 import androidx.compose.ui.graphics.Color
-import com.example.core_domain.model.deck.CollectionColor
+import com.example.core_domain.model.collection.CollectionColor
 
 fun CollectionColor.toComposeColor(): Color = when (this) {
     CollectionColor.ORANGE -> Color(0xFFFF9800)

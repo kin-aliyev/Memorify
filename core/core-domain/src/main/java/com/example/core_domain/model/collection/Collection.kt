@@ -1,4 +1,4 @@
-package com.example.core_domain.model.deck
+package com.example.core_domain.model.collection
 
 data class Collection(
     val id: String = "",

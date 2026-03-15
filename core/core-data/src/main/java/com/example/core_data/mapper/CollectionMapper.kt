@@ -1,8 +1,8 @@
 package com.example.core_data.mapper
 
-import com.example.core_domain.model.deck.Collection
-import com.example.core_domain.model.deck.CollectionColor
-import com.example.core_domain.model.deck.Language
+import com.example.core_domain.model.collection.Collection
+import com.example.core_domain.model.collection.CollectionColor
+import com.example.core_domain.model.collection.Language
 import com.google.firebase.firestore.DocumentSnapshot
 
 fun Collection.toMap(): Map<String, Any?> = mapOf(

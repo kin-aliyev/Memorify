@@ -1,6 +1,6 @@
 package com.example.core_domain.usecase.home
 
-import com.example.core_domain.model.deck.Collection
+import com.example.core_domain.model.collection.Collection
 import com.example.core_domain.repository.CollectionRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
