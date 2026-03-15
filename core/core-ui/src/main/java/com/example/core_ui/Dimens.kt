@@ -4,6 +4,13 @@ import androidx.compose.ui.unit.dp
 
 object Dimens {
 
+    val emojiPickerItem = 40.dp
+    val borderDefault = 1.dp
+    val borderSelected = 2.dp
+
+    val colorPickerItem = 32.dp
+    val colorStripe = 4.dp
+
     // ════════════════════════════════════════════════════════
     //  SPACING — отступы между элементами (Arrangement, padding)
     // ════════════════════════════════════════════════════════
