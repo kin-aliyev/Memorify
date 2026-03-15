@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.core_domain.model.collection.CollectionColor
 import com.example.core_ui.Dimens
 import com.example.core_ui.common.LoadingOverlay
 import com.example.core_ui.common.scaffold.AppHeader
@@ -93,13 +94,15 @@ fun CollectionsScreenContent(
                     items(
                         items = uiState.collections,
                         key = { deck -> deck.id }
-                    ) { deck ->
+                    ) { collection ->
                         CollectionItem(
-                            label = deck.name,
-                            reviewedWords = deck.reviewedWords,
-                            totalWords = deck.totalWords,
-                            lastUsedDate = deck.lastStudiedAt ?: 0L,
-                            onClick = { onAction(CollectionsAction.OnCollectionClick(deck.id)) }
+                            label = collection.name,
+                            emoji = collection.emoji,
+                            color = collection.color,
+                            reviewedWords = collection.reviewedWords,
+                            totalWords = collection.totalWords,
+                            lastUsedDate = collection.lastStudiedAt ?: 0L,
+                            onClick = { onAction(CollectionsAction.OnCollectionClick(collection.id)) }
                         )
                     }
                 }
@@ -184,6 +187,7 @@ private fun CollectionsWithDataPreview() {
                             id = "1",
                             name = "English Basics",
                             emoji = "📚",
+                            color = CollectionColor.ORANGE,
                             totalWords = 100,
                             reviewedWords = 45,
                             lastStudiedAt = System.currentTimeMillis() - 3 * 24 * 60 * 60 * 1000L,
@@ -192,6 +196,7 @@ private fun CollectionsWithDataPreview() {
                             id = "2",
                             name = "Spanish Travel",
                             emoji = "✈️",
+                            color = CollectionColor.ORANGE,
                             totalWords = 50,
                             reviewedWords = 50,
                             lastStudiedAt = System.currentTimeMillis() - 10 * 24 * 60 * 60 * 1000L,
@@ -200,6 +205,7 @@ private fun CollectionsWithDataPreview() {
                             id = "3",
                             name = "Tech Terms",
                             emoji = "💻",
+                            color = CollectionColor.ORANGE,
                             totalWords = 200,
                             reviewedWords = 0,
                             lastStudiedAt = null,
@@ -208,6 +214,7 @@ private fun CollectionsWithDataPreview() {
                             id = "11",
                             name = "Russian Basics",
                             emoji = "📚",
+                            color = CollectionColor.ORANGE,
                             totalWords = 125,
                             reviewedWords = 45,
                             lastStudiedAt = System.currentTimeMillis() - 3 * 24 * 60 * 60 * 1000L,
@@ -216,6 +223,7 @@ private fun CollectionsWithDataPreview() {
                             id = "21",
                             name = "China Travel",
                             emoji = "✈️",
+                            color = CollectionColor.ORANGE,
                             totalWords = 150,
                             reviewedWords = 50,
                             lastStudiedAt = System.currentTimeMillis() - 10 * 24 * 60 * 60 * 1000L,
@@ -224,6 +232,7 @@ private fun CollectionsWithDataPreview() {
                             id = "32",
                             name = "Backend Terms",
                             emoji = "💻",
+                            color = CollectionColor.ORANGE,
                             totalWords = 200,
                             reviewedWords = 185,
                             lastStudiedAt = null,

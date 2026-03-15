@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="error_load_collections">Failed to load collections</string>
+    <string name="error_create_collection">Failed to create collection</string>
+    <string name="error_network">Check your internet connection</string>
 </resources>

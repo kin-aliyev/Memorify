@@ -2,7 +2,11 @@ package com.example.feature_home.presentation.collections
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core_domain.exception.AppException
+import com.example.core_domain.model.collection.Collection
+import com.example.core_domain.model.collection.CollectionColor
 import com.example.core_domain.usecase.home.GetCollectionsUseCase
+import com.example.feature_home.domain.usecase.CreateCollectionUseCase
 import com.example.feature_home.presentation.collections.CollectionsNavigationEvent.ToCollectionDetail
 import com.example.feature_home.presentation.model.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CollectionsViewModel @Inject constructor(
-    private val getCollectionsUseCase: GetCollectionsUseCase
+    private val getCollectionsUseCase: GetCollectionsUseCase,
+    private val createCollectionUseCase: CreateCollectionUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CollectionsUiState())
@@ -29,25 +34,59 @@ class CollectionsViewModel @Inject constructor(
     private val _navigationEvent = MutableSharedFlow<CollectionsNavigationEvent>()
     val navigationEvent: SharedFlow<CollectionsNavigationEvent> = _navigationEvent.asSharedFlow()
 
+    private val _errorEvent = MutableSharedFlow<CollectionsError>()
+    val errorEvent: SharedFlow<CollectionsError> = _errorEvent.asSharedFlow()
+
     init {
         loadCollections()
     }
 
-    fun onAction(action: CollectionsAction) = when(action) {
-        CollectionsAction.OnAddCollectionClick -> navigate(CollectionsNavigationEvent.ToAddCollection)
+    fun onAction(action: CollectionsAction) = when (action) {
         CollectionsAction.OnAddWordAiClick -> navigate(CollectionsNavigationEvent.ToAddAi)
         CollectionsAction.OnAddWordManualClick -> navigate(CollectionsNavigationEvent.ToAddManual)
 
-        is CollectionsAction.OnCollectionClick -> { navigate(ToCollectionDetail(action.collectionId)) }
+        is CollectionsAction.OnCollectionClick -> {
+            navigate(ToCollectionDetail(action.collectionId))
+        }
+
+        is CollectionsAction.OnAddCollectionConfirm -> {
+            createCollection(action.name, action.emoji, action.color)
+        }
+    }
+
+    private fun createCollection(name: String, emoji: String, color: CollectionColor) {
+        viewModelScope.launch {
+            createCollectionUseCase(Collection(name = name, emoji = emoji, color = color.name))
+                .onFailure { error ->
+                    val collectionError = when (error) {
+                        is AppException.NetworkError -> CollectionsError.NetworkError
+                        is AppException.UserNotFound -> CollectionsError.LoadFailed
+                        else -> CollectionsError.CreateFailed
+                    }
+                    _errorEvent.emit(collectionError)
+                }
+        }
     }
 
     private fun loadCollections() {
         viewModelScope.launch {
             getCollectionsUseCase()
                 .onStart { _uiState.update { it.copy(isLoading = true) } }
-                .catch { error -> _uiState.update { it.copy(isLoading = false, errorMessage = error.message) } }
+                .catch { error ->
+                    _uiState.update { it.copy(isLoading = false) }
+                    val collectionError = when (error) {
+                        is AppException.NetworkError -> CollectionsError.NetworkError
+                        is AppException.UserNotFound -> CollectionsError.LoadFailed
+                        else -> CollectionsError.LoadFailed
+                    }
+                    _errorEvent.emit(collectionError)
+                }
                 .collect { collections ->
-                    _uiState.update { it.copy(isLoading = false, collections = collections.map { it.toUiModel() }) }
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            collections = collections.map { it.toUiModel() })
+                    }
                 }
         }
     }

@@ -1,5 +1,6 @@
 package com.example.feature_home.presentation.navigation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -11,16 +12,18 @@ import com.example.feature_home.presentation.collections.CollectionsScreen
 fun NavGraphBuilder.homeNavGraph(
     navController: NavController,
     onSetTopBar: (TopBarState) -> Unit,
+    snackbarHostState: SnackbarHostState
 ) {
     navigation<GraphRoute.Home>(startDestination = HomeRoute.Collections) {
 
         composable<HomeRoute.Collections> {
             CollectionsScreen(
                 onSetTopBar = onSetTopBar,
+                snackbarHostState = snackbarHostState,
+
                 onNavigateToCollectionDetail = { collectionId ->
                     navController.navigate(HomeRoute.CollectionDetail(collectionId))
                 },
-                onNavigateToAddCollection = {navController.navigate(HomeRoute.AddCollection)},
                 onNavigateToAddManual = { navController.navigate(HomeRoute.AddWordManual)},
                 onNavigateToAddAi = { navController.navigate(HomeRoute.AddWordAi)}
             )
