@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,16 +26,17 @@ import com.example.memorify.navigation.MainNavigation
 @Composable
 internal fun MainScreen() {
     val navController = rememberNavController()
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-
     var topBarState by remember { mutableStateOf(TopBarState()) }
+    val snackbarHostState = remember { SnackbarHostState() }
 
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val showBottomBar = currentBackStackEntry?.destination?.hierarchy
         ?.none { it.hasRoute(GraphRoute.Auth::class) } ?: false
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { MainTopBar(state = topBarState) },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
             if (showBottomBar) {
                 MainBottomBar(
@@ -55,6 +58,7 @@ internal fun MainScreen() {
         MainNavigation(
             navController = navController,
             onSetTopBar = { topBarState = it },
+            snackbarHostState = snackbarHostState,
             modifier = Modifier.padding(innerPadding)
         )
     }
