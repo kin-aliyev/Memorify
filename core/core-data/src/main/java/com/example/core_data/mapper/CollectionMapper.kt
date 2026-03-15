@@ -17,7 +17,7 @@ fun Collection.toMap(): Map<String, Any?> = mapOf(
     "createdAt" to createdAt
 )
 
-fun DocumentSnapshot.toDeck(): Collection? = try {
+fun DocumentSnapshot.toCollection(): Collection? = try {
     Collection(
         id = getString("id") ?: return null,
         name = getString("name") ?: "",

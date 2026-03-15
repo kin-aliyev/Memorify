@@ -1,9 +1,11 @@
 package com.example.core_data.repository
 
-import com.example.core_data.mapper.toDeck
+import com.example.core_data.mapper.mapException
+import com.example.core_data.mapper.toAppException
+import com.example.core_data.mapper.toCollection
 import com.example.core_data.mapper.toMap
 import com.example.core_domain.exception.AppException
-import com.example.core_domain.model.deck.Collection
+import com.example.core_domain.model.collection.Collection
 import com.example.core_domain.repository.AuthRepository
 import com.example.core_domain.repository.CollectionRepository
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,32 +33,34 @@ class CollectionRepositoryImpl @Inject constructor(
         .collection("decks")
 
     override fun getCollections(): Flow<List<Collection>> = callbackFlow {
-        val uid = try { uid() } catch (e: Exception) { close(e); return@callbackFlow }
+        val uid = try { uid() } catch (e: Exception) { close(e.toAppException()); return@callbackFlow }
 
         val listener = decksCollection(uid)
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
-                if (exception != null) { close(exception); return@addSnapshotListener }
+                if (exception != null) { close(exception.toAppException()); return@addSnapshotListener }
 
-                trySend(snapshot?.documents?.mapNotNull { it.toDeck() } ?: emptyList())
+                trySend(snapshot?.documents?.mapNotNull { it.toCollection() } ?: emptyList())
             }
 
         awaitClose { listener.remove() }
     }
 
-    override suspend fun createCollection(deck: Collection): Result<String> = runCatching {
-        val col = decksCollection(uid())
-        val doc = col.document()
-        doc.set(deck.copy(id = doc.id).toMap()).await()
-        doc.id
-    }
+    override suspend fun createCollection(collection: Collection): Result<String> = runCatching {
+        val userCollection = decksCollection(uid())
+        val newDocument = userCollection.document()
+        newDocument.set(collection.copy(id = newDocument.id).toMap()).await()
+        newDocument.id
+    }.mapException()
 
-    override suspend fun updateCollection(deck: Collection): Result<Unit> = runCatching {
-        decksCollection(uid()).document(deck.id).set(deck.toMap()).await()
-    }
+    override suspend fun updateCollection(collection: Collection): Result<Unit> = runCatching {
+        decksCollection(uid()).document(collection.id).set(collection.toMap()).await()
+        Unit
+    }.mapException()
 
-    override suspend fun deleteCollection(deck: Collection): Result<Unit> = runCatching {
-        decksCollection(uid()).document(deck.id).delete().await()
-    }
+    override suspend fun deleteCollection(collection: Collection): Result<Unit> = runCatching {
+        decksCollection(uid()).document(collection.id).delete().await()
+        Unit
+    }.mapException()
 
 }

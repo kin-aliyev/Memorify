@@ -1,12 +1,8 @@
 package com.example.core_data.service
 
+import com.example.core_data.mapper.mapException
 import com.example.core_domain.exception.AppException
-import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseAuthRecentLoginRequiredException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.channels.awaitClose
@@ -21,82 +17,43 @@ class FirebaseAuthService @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
 ) {
     val currentUser: Flow<FirebaseUser?> = callbackFlow {
-        val listener = FirebaseAuth.AuthStateListener { auth ->
-            trySend(auth.currentUser)
-        }
+        val listener = FirebaseAuth.AuthStateListener { auth -> trySend(auth.currentUser) }
         firebaseAuth.addAuthStateListener(listener)
 
         awaitClose { firebaseAuth.removeAuthStateListener(listener) }
     }
 
-    suspend fun signInWithEmail(email: String, password: String): Result<FirebaseUser> {
-        return try {
+    suspend fun signInWithEmail(email: String, password: String): Result<FirebaseUser> =
+        runCatching {
             val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
-            val user = authResult.user
-                ?: return Result.failure(AppException.UnknownError(errorMessage = "Authentication succeeded but user is null"))
 
-            Result.success(user)
-        } catch (e: Exception) {
-            Result.failure(mapToAuthException(e, "Sign in failed"))
-        }
-    }
+            authResult.user ?: throw AppException.UnknownError(errorMessage = "User is null")
+        }.mapException()
 
-    suspend fun signUpWithEmail(email: String, password: String): Result<FirebaseUser> {
-        return try {
+
+    suspend fun signUpWithEmail(email: String, password: String): Result<FirebaseUser> =
+        runCatching {
             val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            val user = authResult.user
-                ?: return Result.failure(AppException.UnknownError(errorMessage = "Account creation succeeded but user is null"))
 
-            Result.success(user)
-        } catch (e: Exception) {
-            Result.failure(mapToAuthException(e, "Sign up failed"))
-        }
-    }
+            authResult.user ?: throw AppException.UnknownError(errorMessage = "User is null")
+        }.mapException()
 
-    suspend fun signInWithGoogle(googleIdToken: String): Result<FirebaseUser> {
-        return try {
+
+    suspend fun signInWithGoogle(googleIdToken: String): Result<FirebaseUser> =
+        runCatching {
             val credential = GoogleAuthProvider.getCredential(googleIdToken, null)
             val authResult = firebaseAuth.signInWithCredential(credential).await()
-            val user = authResult.user
-                ?: return Result.failure(AppException.UnknownError(errorMessage = "Google authentication succeeded but user is null"))
 
-            Result.success(user)
-        } catch (e: Exception) {
-            Result.failure(mapToAuthException(e, "Google sign in failed"))
-        }
-    }
+            authResult.user ?: throw AppException.UnknownError(errorMessage = "User is null")
+        }.mapException()
 
-    suspend fun deleteAccount(): Result<Unit> {
-        return try {
-            val currentUser = firebaseAuth.currentUser ?: return Result.failure(AppException.UserNotFound)
-            currentUser.delete().await()
 
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(mapToAuthException(e, "Failed to delete account"))
-        }
-    }
+    suspend fun deleteAccount(): Result<Unit> = runCatching {
+        firebaseAuth.currentUser?.delete()?.await() ?: throw AppException.UserNotFound
+        Unit
+    }.mapException()
 
-    fun signOut(): Result<Unit> {
-        return try {
-            firebaseAuth.signOut()
 
-            Result.success(Unit)
-        } catch (e: Exception) {
-            Result.failure(mapToAuthException(e, "Sign out failed"))
-        }
-    }
+    fun signOut(): Result<Unit> = runCatching { firebaseAuth.signOut() }.mapException()
 
-    private fun mapToAuthException(e: Exception, defaultMessage: String): AppException {
-        return when (e) {
-            is AppException -> e
-            is FirebaseAuthInvalidCredentialsException -> AppException.InvalidCredentials
-            is FirebaseAuthInvalidUserException -> AppException.UserNotFound
-            is FirebaseAuthUserCollisionException -> AppException.UserAlreadyExists
-            is FirebaseAuthRecentLoginRequiredException -> AppException.ReAuthRequired
-            is FirebaseNetworkException -> AppException.NetworkError
-
-            else -> AppException.UnknownError(e, defaultMessage)
-        }
-    }
 }
