@@ -31,11 +31,11 @@ class WordRepositoryImpl @Inject constructor(
         .document(uid)
         .collection("words")
 
-    override fun getWords(deckId: String): Flow<List<WordCard>> = callbackFlow {
+    override fun getWords(collectionId: String): Flow<List<WordCard>> = callbackFlow {
         val uid = try { uid() } catch (e: Exception) { close(e.toAppException()); return@callbackFlow}
 
         val listener = wordsCollection(uid)
-            .whereEqualTo("deckId", deckId)
+            .whereEqualTo("collectionId", collectionId)
             .orderBy("createdAt", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, error ->
                 if (error != null) { close(error.toAppException()); return@addSnapshotListener }
@@ -62,12 +62,12 @@ class WordRepositoryImpl @Inject constructor(
         awaitClose { listener.remove() }
     }
 
-    override fun getWordsForReview(deckId: String): Flow<List<WordCard>> = callbackFlow {
-        val uid = try { uid() } catch (e: Exception) { close(e); return@callbackFlow }
+    override fun getWordsForReview(collectionId: String): Flow<List<WordCard>> = callbackFlow {
+        val uid = try { uid() } catch (e: Exception) { close(e.toAppException()); return@callbackFlow }
         val now = System.currentTimeMillis()
 
         val listener = wordsCollection(uid)
-            .whereEqualTo("deckId", deckId)
+            .whereEqualTo("collectionId", collectionId)
             .whereLessThanOrEqualTo("srs.nextReviewAt", now)
             .orderBy("srs.nextReviewAt", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, error ->
@@ -82,12 +82,16 @@ class WordRepositoryImpl @Inject constructor(
     override suspend fun addWord(word: WordCard): Result<String> = runCatching {
         val col = wordsCollection(uid())
         val doc = col.document()
-        doc.set(word.copy(id = doc.id).toMap()).await()
+        val synced = word.copy(id = doc.id, knowledgeLevel = word.srs.toKnowledgeLevel().name )
+
+        doc.set(synced.toMap()).await()
         doc.id
     }.mapException()
 
     override suspend fun updateWord(word: WordCard): Result<Unit> = runCatching {
-        wordsCollection(uid()).document(word.id).set(word.toMap()).await()
+        val synced = word.copy(knowledgeLevel = word.srs.toKnowledgeLevel().name)
+
+        wordsCollection(uid()).document(synced.id).set(synced.toMap()).await()
         Unit
     }.mapException()
 

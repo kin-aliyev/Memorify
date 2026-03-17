@@ -7,7 +7,7 @@ data class Collection(
     val color: String = CollectionColor.ORANGE.name,
     val sourceLanguage: String = Language.RUSSIAN.code,
     val targetLanguage: String = Language.ENGLISH.code,
-    val wordCount: Int = 0,
+    val totalWords: Int = 0,
     val lastStudiedAt: Long? = null,
     val createdAt: Long = System.currentTimeMillis()
 )

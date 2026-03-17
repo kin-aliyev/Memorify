@@ -12,7 +12,7 @@ fun Collection.toMap(): Map<String, Any?> = mapOf(
     "color" to color,
     "sourceLanguage" to sourceLanguage,
     "targetLanguage" to targetLanguage,
-    "wordCount" to wordCount,
+    "wordCount" to totalWords,
     "lastStudiedAt" to lastStudiedAt,
     "createdAt" to createdAt
 )
@@ -25,7 +25,7 @@ fun DocumentSnapshot.toCollection(): Collection? = try {
         color = getString("color") ?: CollectionColor.ORANGE.name,
         sourceLanguage = getString("sourceLanguage") ?: Language.RUSSIAN.code,
         targetLanguage = getString("targetLanguage") ?: Language.ENGLISH.code,
-        wordCount = getLong("wordCount")?.toInt() ?: 0,
+        totalWords = getLong("wordCount")?.toInt() ?: 0,
         lastStudiedAt = getLong("lastStudiedAt"),
         createdAt = getLong("createdAt") ?: System.currentTimeMillis()
     )
