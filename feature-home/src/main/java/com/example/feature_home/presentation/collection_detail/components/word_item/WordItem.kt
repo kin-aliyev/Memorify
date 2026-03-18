@@ -40,6 +40,7 @@ fun WordItem(
     onDeleteClick: () -> Unit,
 ) {
     var isExpanded by rememberSaveable { mutableStateOf(true) }
+    var showDeleteDialog by rememberSaveable { mutableStateOf(true) }
 
     val knowledgeLevel = KnowledgeLevel.fromString(word.knowledgeLevel)
     val levelColor = knowledgeLevel.toColor()
@@ -119,5 +120,15 @@ fun WordItem(
                 )
             }
         }
+    }
+    if (showDeleteDialog) {
+        DeleteWordDialog(
+            wordName = word.word,
+            onConfirm = {
+                showDeleteDialog = false
+                onDeleteClick()
+            },
+            onDismiss = { showDeleteDialog = false }
+        )
     }
 }
