@@ -121,11 +121,11 @@ internal fun WordDetails(
 
 @Composable
 internal fun DetailRow(
+    modifier: Modifier = Modifier,
     icon: ImageVector,
     iconContentDescription: String,
     text: String,
     italic: Boolean = false,
-    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),

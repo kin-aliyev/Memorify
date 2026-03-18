@@ -113,7 +113,10 @@ fun WordItem(
 
             // ── Section 3: Actions ──
             AnimatedVisibility(visible = isExpanded) {
-                // WordActions content next
+                WordActions(
+                    onDeleteClick = onDeleteClick,
+                    onEditClick = onEditClick
+                )
             }
         }
     }
