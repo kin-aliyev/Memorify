@@ -25,7 +25,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.compositeOver
-import androidx.compose.ui.unit.dp
 import com.example.core_domain.model.word.KnowledgeLevel
 import com.example.core_domain.model.word.WordCard
 import com.example.core_ui.Dimens
@@ -40,7 +39,7 @@ fun WordItem(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    var isExpanded by rememberSaveable { mutableStateOf(false) }
+    var isExpanded by rememberSaveable { mutableStateOf(true) }
 
     val knowledgeLevel = KnowledgeLevel.fromString(word.knowledgeLevel)
     val levelColor = knowledgeLevel.toColor()
@@ -93,15 +92,22 @@ fun WordItem(
 
             // ── Section 2: Details ──
             AnimatedVisibility(visible = isExpanded) {
-                Row {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min),
+                ) {
                     Box(
                         modifier = Modifier
-                            .width(4.dp)
+                            .width(Dimens.colorStripe)
                             .fillMaxHeight()
-                            .background(levelColor.copy(alpha = 0.20f))
+                            .background(levelColor.copy(alpha = 0.20f)),
                     )
-
-                    // WordDetails content
+                    WordDetails(
+                        word = word,
+                        showTranslation = showTranslation,
+                        modifier = Modifier.weight(1f),
+                    )
                 }
             }
 

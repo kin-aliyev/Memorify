@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
 import com.example.core_domain.model.word.KnowledgeLevel
 import com.example.core_domain.model.word.WordCard
 import com.example.core_ui.Dimens
@@ -56,12 +58,17 @@ internal fun WordHeader(
             top = Dimens.spacing12,
             bottom = Dimens.spacing12,
         ),
-        verticalArrangement = Arrangement.spacedBy(Dimens.spacing4),
+        verticalArrangement = Arrangement.spacedBy(Dimens.spacing8),
     ) {
         WordRow(
             word = word.word,
             isFavorite = word.isFavorite,
             onFavoriteToggle = onFavoriteToggle,
+        )
+
+        HorizontalDivider(
+            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+            thickness = 0.5.dp,
         )
 
         SecondaryRow(
