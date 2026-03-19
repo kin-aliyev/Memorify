@@ -10,7 +10,7 @@ sealed interface HomeRoute {
     data class CollectionDetail(val collectionId: String) : HomeRoute
 
     @Serializable
-    data class AddWordManual(val collectionId: String) : HomeRoute
+    data class AddEditWord(val collectionId: String, val wordId: String? = null) : HomeRoute
 
     @Serializable
     data class AddWordAi(val collectionId: String) : HomeRoute

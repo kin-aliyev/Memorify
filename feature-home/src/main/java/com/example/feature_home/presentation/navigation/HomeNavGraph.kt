@@ -24,9 +24,13 @@ fun NavGraphBuilder.homeNavGraph(
                 onNavigateToCollectionDetail = { collectionId ->
                     navController.navigate(HomeRoute.CollectionDetail(collectionId))
                 },
-                onNavigateToAddManual = { navController.navigate(HomeRoute.AddWordManual)},
+                onNavigateToAddManual = { navController.navigate(HomeRoute.AddEditWord)},
                 onNavigateToAddAi = { navController.navigate(HomeRoute.AddWordAi)}
             )
+        }
+
+        composable<HomeRoute.CollectionDetail> {
+
         }
     }
 }
