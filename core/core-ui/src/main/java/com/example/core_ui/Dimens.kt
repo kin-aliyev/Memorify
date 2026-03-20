@@ -44,6 +44,7 @@ object Dimens {
     //  heightListItem → ListItem, строка в списке
     //  heightAppBar   → TopAppBar, BottomAppBar
     // ════════════════════════════════════════════════════════
+    val heightProgressBar = 8.dp
     val heightChip      = 32.dp
     val heightButton    = 48.dp
     val heightTab       = 48.dp
@@ -78,6 +79,7 @@ object Dimens {
     //  iconMd → стандартная иконка: NavigationBar, IconButton, leading icon в TextField, иконка в кнопке — ИСПОЛЬЗУЙ ПО УМОЛЧАНИЮ
     //  iconLg → крупная иконка: FAB, пустое состояние, иконка провайдера (Google) в AuthButton
     // ════════════════════════════════════════════════════════
+    val iconXxs = 6.dp
     val iconXs = 12.dp
     val iconSm = 16.dp
     val iconMd = 24.dp

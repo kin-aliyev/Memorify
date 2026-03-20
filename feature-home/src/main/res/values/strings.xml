@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Collection Errors -->
     <string name="error_load_collections">Failed to load collections</string>
     <string name="error_create_collection">Failed to create collection</string>
     <string name="error_network">Check your internet connection</string>
+
+    <!-- Collection Detail Errors -->
+    <string name="error_load_failed">Failed to load. Check your connection.</string>
+    <string name="error_delete_word_failed">Failed to delete word. Try again.</string>
+    <string name="error_favorite_update_failed">Failed to update favorite.</string>
+    <string name="error_delete_collection_failed">Failed to delete collection. Try again.</string>
 </resources>

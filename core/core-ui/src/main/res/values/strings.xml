@@ -8,9 +8,14 @@
     <string name="nav_settings">Settings</string>
 
     <!-- Date formatter -->
-    <string name="last_used_today">last used · today</string>
-    <string name="last_used_yesterday">last used · yesterday</string>
-    <string name="last_used_days_ago">last used · %1$dd ago</string>
-    <string name="last_used_weeks_ago">last used · %1$dw ago</string>
-    <string name="last_used_date">last used · %1$s</string>
+    <string name="last_studied_today">last studied · today</string>
+    <string name="last_studied_yesterday">last studied · yesterday</string>
+    <string name="last_studied_days_ago">last studied · %1$dd ago</string>
+    <string name="last_studied_weeks_ago">last studied · %1$dw ago</string>
+    <string name="last_studied_date">last studied · %1$s</string>
+    
+    <string name="knowledge_level_new">New</string>
+    <string name="knowledge_level_learning">Learning</string>
+    <string name="knowledge_level_reviewing">Known</string>
+    <string name="knowledge_level_mastered">Mastered</string>
 </resources>

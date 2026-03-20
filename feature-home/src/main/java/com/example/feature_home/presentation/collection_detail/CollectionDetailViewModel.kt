@@ -6,9 +6,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.core_domain.model.word.KnowledgeLevel
 import com.example.core_domain.model.word.WordCard
-import com.example.core_domain.repository.CollectionRepository
-import com.example.core_domain.repository.WordRepository
 import com.example.core_domain.usecase.home.GetCollectionDetailUseCase
+import com.example.feature_home.domain.usecase.DeleteCollectionUseCase
+import com.example.feature_home.domain.usecase.DeleteWordUseCase
+import com.example.feature_home.domain.usecase.UpdateWordUseCase
 import com.example.feature_home.presentation.collection_detail.model.WordFilterState
 import com.example.feature_home.presentation.collection_detail.model.WordSortOption
 import com.example.feature_home.presentation.navigation.HomeRoute
@@ -28,8 +29,9 @@ import javax.inject.Inject
 @HiltViewModel
 class CollectionDetailViewModel @Inject constructor(
     private val getCollectionDetail: GetCollectionDetailUseCase,
-    private val wordRepository: WordRepository,
-    private val collectionRepository: CollectionRepository,
+    private val updateWordCard: UpdateWordUseCase,
+    private val deleteWordCard: DeleteWordUseCase,
+    private val deleteCollection : DeleteCollectionUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val collectionId = savedStateHandle.toRoute<HomeRoute.CollectionDetail>().collectionId
@@ -56,11 +58,21 @@ class CollectionDetailViewModel @Inject constructor(
 
         is CollectionDetailAction.OnFavoriteToggle -> toggleFavorite(action.word)
         is CollectionDetailAction.OnDeleteWord -> deleteWord(action.word)
+        is CollectionDetailAction.OnEditWord -> navigate(
+           CollectionDetailNavigationEvent.ToEditWord(collectionId = collectionId, wordId = action.word.id)
+        )
 
         is CollectionDetailAction.OnToggleTranslation -> toggleTranslation()
 
+        is CollectionDetailAction.OnAddWordManual -> navigate(
+            CollectionDetailNavigationEvent.ToAddWordManual(collectionId)
+        )
+        is CollectionDetailAction.OnAddWordAi -> navigate(
+            CollectionDetailNavigationEvent.ToAddWordAi(collectionId)
+        )
+
         is CollectionDetailAction.OnEditCollection -> navigate(CollectionDetailNavigationEvent.ToEditCollection)
-        is CollectionDetailAction.OnDeleteCollection -> deleteCollection()
+        is CollectionDetailAction.OnDeleteCollection -> handleDeleteCollection()
     }
 
     private fun loadData() {
@@ -111,14 +123,14 @@ class CollectionDetailViewModel @Inject constructor(
 
     private fun toggleFavorite(word: WordCard) {
         viewModelScope.launch {
-            wordRepository.updateWord(word.copy(isFavorite = !word.isFavorite))
+            updateWordCard(word.copy(isFavorite = !word.isFavorite))
                 .onFailure { _errorEvent.emit(CollectionDetailError.FavoriteUpdateFailed) }
         }
     }
 
     private fun deleteWord(word: WordCard) {
         viewModelScope.launch {
-            wordRepository.deleteWord(word)
+            deleteWordCard(word)
                 .onFailure { _errorEvent.emit(CollectionDetailError.DeleteWordFailed) }
         }
     }
@@ -127,10 +139,10 @@ class CollectionDetailViewModel @Inject constructor(
         _uiState.update { it.copy(showTranslation = !it.showTranslation) }
     }
 
-    private fun deleteCollection() {
+    private fun handleDeleteCollection() {
         viewModelScope.launch {
             val collection = _uiState.value.collection ?: return@launch
-            collectionRepository.deleteCollection(collection)
+            deleteCollection(collection)
                 .onSuccess { navigate(CollectionDetailNavigationEvent.Back) }
                 .onFailure { _errorEvent.emit(CollectionDetailError.DeleteCollectionFailed) }
         }

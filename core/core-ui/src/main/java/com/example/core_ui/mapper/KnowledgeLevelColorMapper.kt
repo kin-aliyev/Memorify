@@ -10,3 +10,5 @@ fun KnowledgeLevel.toColor(): Color = when(this) {
     KnowledgeLevel.MASTERED -> Color(0xFF66BB6A)
 }
 
+
+

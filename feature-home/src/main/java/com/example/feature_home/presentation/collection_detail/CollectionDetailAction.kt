@@ -14,9 +14,14 @@ sealed interface CollectionDetailAction {
     // Word
     data class OnFavoriteToggle(val word: WordCard) : CollectionDetailAction
     data class OnDeleteWord(val word: WordCard) : CollectionDetailAction
+    data class OnEditWord(val word: WordCard) : CollectionDetailAction
 
     // Translation
     data object OnToggleTranslation : CollectionDetailAction
+
+    // FAB
+    data object OnAddWordManual : CollectionDetailAction
+    data object OnAddWordAi : CollectionDetailAction
 
     data object OnEditCollection : CollectionDetailAction
     data object OnDeleteCollection : CollectionDetailAction
