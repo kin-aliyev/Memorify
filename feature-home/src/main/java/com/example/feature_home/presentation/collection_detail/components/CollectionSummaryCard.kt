@@ -1,4 +1,4 @@
-package com.example.feature_home.presentation.collection_detail.components.summary_card
+package com.example.feature_home.presentation.collection_detail.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -38,7 +38,6 @@ import com.example.core_ui.theme.MemorifyTheme
 import com.example.core_ui.utils.formatLastUsed
 import java.util.concurrent.TimeUnit
 
-private val ColorMastered = Color(0xFF66BB6A)
 
 @Composable
 internal fun CollectionSummaryCard(
@@ -50,10 +49,7 @@ internal fun CollectionSummaryCard(
     masteredCount: Int,
 ) {
     Card(
-        modifier = modifier.padding(
-            horizontal = Dimens.paddingScreen,
-            vertical = Dimens.spacing8,
-        ),
+        modifier = modifier,
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
@@ -224,7 +220,7 @@ private fun SegmentedProgressBar(
                 modifier = Modifier
                     .weight(masteredFraction)
                     .height(Dimens.heightProgressBar)
-                    .background( KnowledgeLevel.MASTERED.toColor()),
+                    .background( KnowledgeLevel.KNOWN.toColor()),
             )
         }
     }
@@ -241,30 +237,30 @@ private fun LegendRow(
     reviewingCount: Int,
     masteredCount: Int,
 ) {
-    val masteredPercent = if (totalWords > 0) {
-        ((masteredCount.toFloat() / totalWords) * 100).toInt()
-    } else 0
-
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Dimens.spacing4),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(Dimens.spacing8),
+            horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             LegendDot(color = KnowledgeLevel.NEW.toColor(), label = "$newCount New")
             LegendDot(color = KnowledgeLevel.LEARNING.toColor(), label = "$learningCount Learning")
             LegendDot(color = KnowledgeLevel.REVIEWING.toColor(), label = "$reviewingCount Reviewing")
-            LegendDot(color = KnowledgeLevel.MASTERED.toColor(), label = "$masteredCount Mastered")
+            LegendDot(color = KnowledgeLevel.KNOWN.toColor(), label = "$masteredCount Known")
         }
 
+        val studiedPercent = if (totalWords > 0) {
+            (((totalWords - newCount).toFloat() / totalWords) * 100).toInt()
+        } else 0
+
         Text(
-            text = "$masteredPercent% Mastered",
+            text = "$studiedPercent% studied",
             style = MaterialTheme.typography.labelSmall,
             fontWeight = FontWeight.SemiBold,
-            color = KnowledgeLevel.MASTERED.toColor(),
-            modifier = Modifier.align(Alignment.End),
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.align(Alignment.End)
         )
     }
 }

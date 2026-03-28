@@ -25,10 +25,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import com.example.core_domain.model.word.KnowledgeLevel
 import com.example.core_domain.model.word.WordCard
 import com.example.core_ui.Dimens
 import com.example.core_ui.mapper.toColor
+import com.example.core_ui.theme.MemorifyTheme
 
 @Composable
 fun WordItem(
@@ -39,8 +43,10 @@ fun WordItem(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    var isExpanded by rememberSaveable { mutableStateOf(true) }
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+
+    val hasExpandableContent = word.hasExpandableContent(showTranslation)
 
     val knowledgeLevel = KnowledgeLevel.fromString(word.knowledgeLevel)
     val levelColor = knowledgeLevel.toColor()
@@ -92,7 +98,7 @@ fun WordItem(
             }
 
             // ── Section 2: Details ──
-            AnimatedVisibility(visible = isExpanded) {
+            AnimatedVisibility(visible = isExpanded && hasExpandableContent) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -115,12 +121,13 @@ fun WordItem(
             // ── Section 3: Actions ──
             AnimatedVisibility(visible = isExpanded) {
                 WordActions(
-                    onDeleteClick = onDeleteClick,
+                    onDeleteClick = { showDeleteDialog = true },
                     onEditClick = onEditClick
                 )
             }
         }
     }
+
     if (showDeleteDialog) {
         DeleteWordDialog(
             wordName = word.word,
@@ -129,6 +136,97 @@ fun WordItem(
                 onDeleteClick()
             },
             onDismiss = { showDeleteDialog = false }
+        )
+    }
+}
+
+// ── Extension ─────────────────────────────────────────────────────────────────
+
+private fun WordCard.hasExpandableContent(showTranslation: Boolean): Boolean =
+    (!showTranslation && translation.isNotBlank())
+            || description.isNotBlank()
+            || exampleSentence.isNotBlank()
+            || synonyms.isNotEmpty()
+            || antonyms.isNotEmpty()
+            || collocations.isNotEmpty()
+
+// ── Preview parameter provider ────────────────────────────────────────────────
+
+private class WordItemPreviewProvider : PreviewParameterProvider<WordCard> {
+    override val values = sequenceOf(
+        // Rich word — all fields filled, LEARNING level
+        WordCard(
+            id = "1",
+            word = "acquire",
+            translation = "приобретать",
+            partOfSpeech = "verb",
+            description = "To gain something through effort or experience.",
+            exampleSentence = "She acquired new skills working abroad.",
+            synonyms = listOf("obtain", "gain", "attain"),
+            antonyms = listOf("lose", "forfeit"),
+            collocations = listOf("acquire knowledge", "acquire skills", "acquire assets"),
+            knowledgeLevel = KnowledgeLevel.LEARNING.name,
+            isFavorite = true,
+        ),
+        // Minimal — only word + translation, NEW level, not favorite
+        WordCard(
+            id = "2",
+            word = "leverage",
+            translation = "использовать в своих целях",
+            knowledgeLevel = KnowledgeLevel.NEW.name,
+            isFavorite = false,
+        ),
+        // No expandable content at all — card tap should do nothing
+        WordCard(
+            id = "3",
+            word = "ROI",
+            translation = "рентабельность инвестиций",
+            knowledgeLevel = KnowledgeLevel.KNOWN.name,
+            isFavorite = false,
+        ),
+        // REVIEWING level, example sentence only
+        WordCard(
+            id = "4",
+            word = "delegate",
+            translation = "делегировать",
+            partOfSpeech = "verb",
+            exampleSentence = "A good manager knows how to delegate effectively.",
+            knowledgeLevel = KnowledgeLevel.REVIEWING.name,
+            isFavorite = true,
+        ),
+    )
+}
+
+// ── Previews ──────────────────────────────────────────────────────────────────
+
+@Preview(showBackground = true, name = "Translation visible")
+@Composable
+private fun WordItemTranslationVisiblePreview(
+    @PreviewParameter(WordItemPreviewProvider::class) word: WordCard,
+) {
+    MemorifyTheme {
+        WordItem(
+            word = word,
+            showTranslation = true,
+            onFavoriteToggle = {},
+            onEditClick = {},
+            onDeleteClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "Translation hidden")
+@Composable
+private fun WordItemTranslationHiddenPreview(
+    @PreviewParameter(WordItemPreviewProvider::class) word: WordCard,
+) {
+    MemorifyTheme {
+        WordItem(
+            word = word,
+            showTranslation = false,
+            onFavoriteToggle = {},
+            onEditClick = {},
+            onDeleteClick = {},
         )
     }
 }

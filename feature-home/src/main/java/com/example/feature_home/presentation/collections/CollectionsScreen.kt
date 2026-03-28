@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -24,7 +23,6 @@ import com.example.core_ui.model.BottomNavItem
 import com.example.core_ui.model.TopBarState
 import com.example.core_ui.theme.MemorifyTheme
 import com.example.feature_home.presentation.collections.components.AddCollectionDialog
-import com.example.feature_home.presentation.collections.components.CollectionsScreenContent
 import com.example.feature_home.presentation.common.SpeedDialFab
 import com.example.feature_home.presentation.common.SpeedDialItem
 
@@ -122,6 +120,8 @@ fun CollectionsScreen(
         modifier = modifier,
     )
 }
+
+
 
 @Preview
 @Composable

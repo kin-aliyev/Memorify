@@ -27,12 +27,9 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.core_domain.model.word.KnowledgeLevel
 import com.example.core_domain.model.word.WordCard
 import com.example.core_ui.Dimens
-import com.example.core_ui.theme.MemorifyTheme
 
 @Composable
 internal fun WordDetails(
@@ -179,80 +176,5 @@ private fun CollocationRow(
                 )
             }
         }
-    }
-}
-
-// ── Previews ──────────────────────────────────────────────────────────────────
-
-@Preview(showBackground = true, name = "All fields")
-@Composable
-private fun WordDetailsFullPreview() {
-    MemorifyTheme {
-        WordItem(
-            word = WordCard(
-                id = "1",
-                word = "acquire",
-                translation = "приобретать",
-                partOfSpeech = "verb",
-                description = "To gain something through effort or experience.",
-                exampleSentence = "She acquired new skills working abroad.",
-                synonyms = listOf("obtain", "gain", "attain"),
-                antonyms = listOf("lose", "forfeit"),
-                collocations = listOf("acquire knowledge", "acquire skills", "acquire assets"),
-                knowledgeLevel = KnowledgeLevel.LEARNING.name,
-                isFavorite = true,
-            ),
-            showTranslation = true,
-            onFavoriteToggle = {},
-            onEditClick = {},
-            onDeleteClick = {},
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "Translation hidden")
-@Composable
-private fun WordDetailsTranslationHiddenPreview() {
-    MemorifyTheme {
-        WordItem(
-            word = WordCard(
-                id = "1",
-                word = "acquire",
-                translation = "приобретать",
-                partOfSpeech = "verb",
-                description = "To gain something through effort or experience.",
-                exampleSentence = "She acquired new skills working abroad.",
-                synonyms = listOf("obtain", "gain", "attain"),
-                antonyms = listOf("lose", "forfeit"),
-                collocations = emptyList(),
-                knowledgeLevel = KnowledgeLevel.REVIEWING.name,
-                isFavorite = false,
-            ),
-            showTranslation = false,
-            onFavoriteToggle = {},
-            onEditClick = {},
-            onDeleteClick = {},
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "Minimal fields")
-@Composable
-private fun WordDetailsMinimalPreview() {
-    MemorifyTheme {
-        WordItem(
-            word = WordCard(
-                id = "1",
-                word = "leverage",
-                translation = "использовать",
-                partOfSpeech = "verb",
-                knowledgeLevel = KnowledgeLevel.NEW.name,
-                isFavorite = false,
-            ),
-            showTranslation = true,
-            onFavoriteToggle = {},
-            onEditClick = {},
-            onDeleteClick = {},
-        )
     }
 }

@@ -1,6 +1,8 @@
 package com.example.feature_home.presentation.collection_detail
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
@@ -17,6 +19,9 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.core_ui.model.TopBarState
+import com.example.feature_home.presentation.collection_detail.components.filter_bar.SortBottomSheet
+import com.example.feature_home.presentation.common.SpeedDialFab
+import com.example.feature_home.presentation.common.SpeedDialItem
 
 @Composable
 fun CollectionDetailScreen(
@@ -33,6 +38,7 @@ fun CollectionDetailScreen(
     val errorMessages = rememberCollectionDetailErrorMessages()
 
     var fabExpanded by remember { mutableStateOf(false) }
+    var showSortSheet by remember { mutableStateOf(false) }
 
     LaunchedEffect(uiState.collection, uiState.showTranslation) {
         onSetTopBar(
@@ -46,6 +52,30 @@ fun CollectionDetailScreen(
                             contentDescription = "Toggle translation",
                         )
                     }
+                },
+                fab = {
+                    SpeedDialFab(
+                        expanded = fabExpanded,
+                        onToggle = { fabExpanded = !fabExpanded},
+                        items = listOf(
+                            SpeedDialItem(
+                                icon = Icons.Default.Edit,
+                                label = "Add manually",
+                                onClick = {
+                                    fabExpanded = false
+                                    viewModel.onAction(CollectionDetailAction.OnAddWordManual)
+                                },
+                            ),
+                            SpeedDialItem(
+                                icon = Icons.Default.AutoAwesome,
+                                label = "Generate with AI",
+                                onClick = {
+                                    fabExpanded = false
+                                    viewModel.onAction(CollectionDetailAction.OnAddWordAi)
+                                },
+                            ),
+                        )
+                    )
                 }
             )
         )
@@ -54,9 +84,12 @@ fun CollectionDetailScreen(
     LaunchedEffect(Unit) {
         viewModel.navigationEvent.collect { event ->
             when (event) {
-                is CollectionDetailNavigationEvent.ToAddWordAi -> onNavigateToAddWordAi(event.collectionId)
-                is CollectionDetailNavigationEvent.ToAddWordManual -> onNavigateToAddWordManual(event.collectionId)
-                is CollectionDetailNavigationEvent.ToEditWord -> onNavigateToEditWord(event.collectionId, event.wordId)
+                is CollectionDetailNavigationEvent.ToAddWordAi ->
+                    onNavigateToAddWordAi(event.collectionId)
+                is CollectionDetailNavigationEvent.ToAddWordManual ->
+                    onNavigateToAddWordManual(event.collectionId)
+                is CollectionDetailNavigationEvent.ToEditWord ->
+                    onNavigateToEditWord(event.collectionId, event.wordId)
                 CollectionDetailNavigationEvent.Back -> onNavigateBack()
                 CollectionDetailNavigationEvent.ToEditCollection -> { }
             }
@@ -71,4 +104,19 @@ fun CollectionDetailScreen(
             )
         }
     }
+
+    if (showSortSheet) {
+        SortBottomSheet(
+            currentSortOption = uiState.filterState.sortOption,
+            onSortOptionSelected = { viewModel.onAction(CollectionDetailAction.OnSortOptionSelect(it)) },
+            onDismiss = { showSortSheet = false }
+        )
+    }
+
+    CollectionDetailContent(
+        uiState = uiState,
+        onAction = viewModel::onAction,
+        onSortClick = { showSortSheet = true },
+        modifier = modifier,
+    )
 }

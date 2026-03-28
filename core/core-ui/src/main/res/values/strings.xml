@@ -17,5 +17,5 @@
     <string name="knowledge_level_new">New</string>
     <string name="knowledge_level_learning">Learning</string>
     <string name="knowledge_level_reviewing">Known</string>
-    <string name="knowledge_level_mastered">Mastered</string>
+    <string name="knowledge_level_known">Mastered</string>
 </resources>

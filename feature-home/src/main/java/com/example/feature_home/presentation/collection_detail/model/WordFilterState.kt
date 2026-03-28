@@ -6,7 +6,9 @@ data class WordFilterState(
     val selectedLevels: Set<KnowledgeLevel> = emptySet(),
     val favoritesOnly: Boolean = false,
     val sortOption: WordSortOption = WordSortOption.NEWEST_FIRST
-)
+) {
+    val isActive: Boolean get() = selectedLevels.isNotEmpty() || favoritesOnly
+}
 
 enum class WordSortOption {
     NEWEST_FIRST,
@@ -16,3 +18,5 @@ enum class WordSortOption {
     KNOWLEDGE_NEW_FIRST,
     KNOWLEDGE_KNOWN_FIRST,
 }
+
+

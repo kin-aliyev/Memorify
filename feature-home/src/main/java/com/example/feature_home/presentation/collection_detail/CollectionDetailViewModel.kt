@@ -40,8 +40,7 @@ class CollectionDetailViewModel @Inject constructor(
     val uiState: StateFlow<CollectionDetailUiState> = _uiState.asStateFlow()
 
     private val _navigationEvent = MutableSharedFlow<CollectionDetailNavigationEvent>()
-    val navigationEvent: SharedFlow<CollectionDetailNavigationEvent> =
-        _navigationEvent.asSharedFlow()
+    val navigationEvent: SharedFlow<CollectionDetailNavigationEvent> = _navigationEvent.asSharedFlow()
 
     private val _errorEvent = MutableSharedFlow<CollectionDetailError>()
     val errorEvent: SharedFlow<CollectionDetailError> = _errorEvent.asSharedFlow()

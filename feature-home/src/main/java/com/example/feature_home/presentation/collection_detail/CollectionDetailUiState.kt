@@ -41,5 +41,5 @@ data class CollectionDetailUiState(
     val newCount: Int get() = words.count { KnowledgeLevel.fromString(it.knowledgeLevel) == KnowledgeLevel.NEW }
     val learningCount: Int get() = words.count { KnowledgeLevel.fromString(it.knowledgeLevel) == KnowledgeLevel.LEARNING }
     val reviewingCount: Int get() = words.count { KnowledgeLevel.fromString(it.knowledgeLevel) == KnowledgeLevel.REVIEWING }
-    val masteredCount: Int get() = words.count { KnowledgeLevel.fromString(it.knowledgeLevel) == KnowledgeLevel.MASTERED }
+    val masteredCount: Int get() = words.count { KnowledgeLevel.fromString(it.knowledgeLevel) == KnowledgeLevel.KNOWN }
 }

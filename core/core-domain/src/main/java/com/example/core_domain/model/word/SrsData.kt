@@ -9,7 +9,7 @@ data class SrsData(
 ) {
     fun toKnowledgeLevel(): KnowledgeLevel = when {
         lastReviewedAt == null  -> KnowledgeLevel.NEW
-        intervalDays >= 21      -> KnowledgeLevel.MASTERED
+        intervalDays >= 21      -> KnowledgeLevel.KNOWN
         intervalDays >= 7       -> KnowledgeLevel.REVIEWING
         else                    -> KnowledgeLevel.LEARNING
     }

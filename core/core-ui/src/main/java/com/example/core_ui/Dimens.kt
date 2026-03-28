@@ -53,6 +53,7 @@ object Dimens {
     val heightCollectionItem  = 76.dp
     val heightTopAppBar    = 64.dp
     val heightNavigationBar = 80.dp
+    val heightEmptyState = 240.dp
 
     // ════════════════════════════════════════════════════════
     //  ELEVATION — Material 3 elevation levels

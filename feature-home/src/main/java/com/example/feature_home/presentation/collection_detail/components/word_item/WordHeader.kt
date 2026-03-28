@@ -95,7 +95,7 @@ private fun WordRow(
     ) {
         Text(
             text = word,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -232,7 +232,7 @@ private class WordHeaderPreviewProvider : PreviewParameterProvider<WordCard> {
             word = "revenue",
             translation = "выручка",
             partOfSpeech = "noun",
-            knowledgeLevel = KnowledgeLevel.MASTERED.name,
+            knowledgeLevel = KnowledgeLevel.KNOWN.name,
             isFavorite = true,
         ),
         WordCard(
