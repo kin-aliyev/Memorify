@@ -38,7 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.core_domain.model.collection.CollectionColor
 import com.example.core_ui.collection.CollectionEmoji
 import com.example.core_ui.Dimens
-import com.example.core_ui.collection.toDisplayColor
+import com.example.core_ui.mapper.toColor
 import com.example.core_ui.common.PrimaryButton
 import com.example.core_ui.theme.MemorifyTheme
 
@@ -154,7 +154,7 @@ private fun ColorItem(
         modifier = modifier
             .size(Dimens.colorPickerItem)
             .clip(shape)
-            .background(color.toDisplayColor())
+            .background(color.toColor())
             .then(
                 if (isSelected) Modifier.border(
                     width = Dimens.borderSelected,

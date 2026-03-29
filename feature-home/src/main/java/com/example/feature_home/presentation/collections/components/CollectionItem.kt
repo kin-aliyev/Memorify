@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.core_domain.model.collection.CollectionColor
 import com.example.core_ui.Dimens
-import com.example.core_ui.collection.toDisplayColor
+import com.example.core_ui.mapper.toColor
 import com.example.core_ui.theme.MemorifyTheme
 import com.example.core_ui.utils.formatLastUsed
 
@@ -60,7 +60,7 @@ fun CollectionItem(
                 modifier = Modifier
                     .width(Dimens.colorStripe)
                     .fillMaxHeight()
-                    .background(color.toDisplayColor()),
+                    .background(color.toColor()),
             )
 
             Column(

@@ -18,7 +18,7 @@ fun Collection.toUiModel() = CollectionUiModel(
     name = name,
     emoji = emoji,
     color = CollectionColor.valueOf(color),
-    totalWords = wordCount,
+    totalWords = totalWords,
     reviewedWords = 0,
     lastStudiedAt = lastStudiedAt,
 )

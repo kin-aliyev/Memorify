@@ -1,9 +1,9 @@
-package com.example.core_ui.collection
+package com.example.core_ui.mapper
 
 import androidx.compose.ui.graphics.Color
 import com.example.core_domain.model.collection.CollectionColor
 
-fun CollectionColor.toDisplayColor(): Color = when (this) {
+fun CollectionColor.toColor(): Color = when (this) {
     CollectionColor.ORANGE -> Color(0xFFFF9800)
     CollectionColor.BLUE   -> Color(0xFF2196F3)
     CollectionColor.GREEN  -> Color(0xFF4CAF50)

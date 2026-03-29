@@ -38,7 +38,7 @@ class CollectionsViewModel @Inject constructor(
     val errorEvent: SharedFlow<CollectionsError> = _errorEvent.asSharedFlow()
 
     init {
-        loadCollections()
+        loadData()
     }
 
     fun onAction(action: CollectionsAction) = when (action) {
@@ -52,6 +52,8 @@ class CollectionsViewModel @Inject constructor(
         is CollectionsAction.OnAddCollectionConfirm -> {
             createCollection(action.name, action.emoji, action.color)
         }
+
+        CollectionsAction.OnRetry -> loadData()
     }
 
     private fun createCollection(name: String, emoji: String, color: CollectionColor) {
@@ -68,12 +70,12 @@ class CollectionsViewModel @Inject constructor(
         }
     }
 
-    private fun loadCollections() {
+    private fun loadData() {
         viewModelScope.launch {
             getCollectionsUseCase()
-                .onStart { _uiState.update { it.copy(isLoading = true) } }
+                .onStart { _uiState.update { it.copy(isLoading = true, isError = false) } }
                 .catch { error ->
-                    _uiState.update { it.copy(isLoading = false) }
+                    _uiState.update { it.copy(isLoading = false, isError = true) }
                     val collectionError = when (error) {
                         is AppException.NetworkError -> CollectionsError.NetworkError
                         is AppException.UserNotFound -> CollectionsError.LoadFailed
@@ -85,6 +87,7 @@ class CollectionsViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
+                            isError = false,
                             collections = collections.map { it.toUiModel() })
                     }
                 }

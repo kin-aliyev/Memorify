@@ -1,7 +1,6 @@
-package com.example.feature_home.presentation.collections.components
+package com.example.feature_home.presentation.collections
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,14 +26,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.core_domain.model.collection.CollectionColor
 import com.example.core_ui.Dimens
+import com.example.core_ui.common.ErrorRetryState
 import com.example.core_ui.common.LoadingOverlay
 import com.example.core_ui.common.scaffold.AppHeader
 import com.example.core_ui.common.scaffold.PreviewScaffold
 import com.example.core_ui.model.BottomNavItem
 import com.example.core_ui.model.TopBarState
 import com.example.core_ui.theme.MemorifyTheme
-import com.example.feature_home.presentation.collections.CollectionsAction
-import com.example.feature_home.presentation.collections.CollectionsUiState
+import com.example.feature_home.presentation.collections.components.CollectionItem
 import com.example.feature_home.presentation.common.SpeedDialFab
 import com.example.feature_home.presentation.common.SpeedDialItem
 import com.example.feature_home.presentation.model.CollectionUiModel
@@ -45,66 +44,73 @@ fun CollectionsScreenContent(
     uiState: CollectionsUiState,
     onAction: (CollectionsAction) -> Unit,
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
-        when {
-            uiState.isLoading -> {
-                LoadingOverlay(isLoading = uiState.isLoading)
+    when {
+        uiState.isLoading -> {
+            LoadingOverlay(isLoading = uiState.isLoading)
+        }
+
+        uiState.isError -> {
+            ErrorRetryState(
+                onRetry = { onAction(CollectionsAction.OnRetry)},
+                modifier = modifier,
+                subtitle = "We couldn't load your collections.\nCheck your connection and try again.",
+            )
+        }
+
+        uiState.collections.isEmpty() -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.CreateNewFolder,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.4f),
+                    modifier = Modifier
+                        .size(Dimens.iconXxl)
+                )
+
+                Text(
+                    text = "No collections\nClick „+“ to add one",
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.4f),
+                    style = MaterialTheme.typography.labelLarge
+                )
             }
+        }
 
-            uiState.collections.isEmpty() -> {
-                Column(
-                    modifier = Modifier.align(Alignment.Center),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.CreateNewFolder,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.4f),
-                        modifier = Modifier
-                            .size(Dimens.iconXxl)
-                    )
-
+        else -> {
+            LazyColumn(
+                modifier = modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(Dimens.spacing12),
+                contentPadding = PaddingValues(
+                    horizontal = Dimens.paddingScreen,
+                    vertical = Dimens.spacing16,
+                )
+            ) {
+                item {
                     Text(
-                        text = "No collections\nClick „+“ to add one",
-                        textAlign = TextAlign.Center,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(0.4f),
-                        style = MaterialTheme.typography.labelLarge
+                        text = "Your collections",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.padding(bottom = Dimens.spacing8),
                     )
                 }
-            }
 
-            else -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(Dimens.spacing12),
-                    contentPadding = PaddingValues(
-                        horizontal = Dimens.paddingScreen,
-                        vertical = Dimens.spacing16,
+                items(
+                    items = uiState.collections,
+                    key = { deck -> deck.id }
+                ) { collection ->
+                    CollectionItem(
+                        label = collection.name,
+                        emoji = collection.emoji,
+                        color = collection.color,
+                        reviewedWords = collection.reviewedWords,
+                        totalWords = collection.totalWords,
+                        lastUsedDate = collection.lastStudiedAt ?: 0L,
+                        onClick = { onAction(CollectionsAction.OnCollectionClick(collection.id)) }
                     )
-                ) {
-                    item {
-                        Text(
-                            text = "Your collections",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.padding(bottom = Dimens.spacing8),
-                        )
-                    }
-
-                    items(
-                        items = uiState.collections,
-                        key = { deck -> deck.id }
-                    ) { collection ->
-                        CollectionItem(
-                            label = collection.name,
-                            emoji = collection.emoji,
-                            color = collection.color,
-                            reviewedWords = collection.reviewedWords,
-                            totalWords = collection.totalWords,
-                            lastUsedDate = collection.lastStudiedAt ?: 0L,
-                            onClick = { onAction(CollectionsAction.OnCollectionClick(collection.id)) }
-                        )
-                    }
                 }
             }
         }
