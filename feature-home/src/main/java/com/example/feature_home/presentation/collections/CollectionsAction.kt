@@ -11,4 +11,6 @@ sealed interface CollectionsAction {
 
     data object OnAddWordManualClick : CollectionsAction
     data object OnAddWordAiClick : CollectionsAction
+
+    data object OnRetry: CollectionsAction
 }

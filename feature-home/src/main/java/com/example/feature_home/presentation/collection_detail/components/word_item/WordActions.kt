@@ -32,7 +32,6 @@ internal fun WordActions(
             .fillMaxWidth()
             .padding(
                 end = Dimens.spacing8,
-                bottom = Dimens.spacing8,
             ),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically,

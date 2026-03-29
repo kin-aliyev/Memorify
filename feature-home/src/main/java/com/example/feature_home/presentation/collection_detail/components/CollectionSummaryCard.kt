@@ -154,9 +154,10 @@ private fun SegmentedProgressBar(
     reviewingCount: Int,
     masteredCount: Int,
 ) {
-    val total = newCount + learningCount + reviewingCount + masteredCount
     var animationPlayed by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { animationPlayed = true }
+
+    val total = newCount + learningCount + reviewingCount + masteredCount
 
     val newFraction by animateFloatAsState(
         targetValue = if (animationPlayed && total > 0) newCount.toFloat() / total else 0f,
@@ -180,7 +181,7 @@ private fun SegmentedProgressBar(
     )
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(Dimens.heightProgressBar)
             .clip(CircleShape)
@@ -252,7 +253,7 @@ private fun LegendRow(
         }
 
         val studiedPercent = if (totalWords > 0) {
-            (((totalWords - newCount).toFloat() / totalWords) * 100).toInt()
+            (((totalWords - newCount - learningCount).toFloat() / totalWords) * 100).toInt()
         } else 0
 
         Text(

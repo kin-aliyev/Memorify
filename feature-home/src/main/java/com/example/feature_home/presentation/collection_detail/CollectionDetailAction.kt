@@ -6,23 +6,25 @@ import com.example.feature_home.presentation.collection_detail.model.WordSortOpt
 
 sealed interface CollectionDetailAction {
     // Filter
-    data class OnLevelFilterToggle(val level: KnowledgeLevel) : CollectionDetailAction
-    data class OnSortOptionSelect(val option: WordSortOption) : CollectionDetailAction
-    data object OnFavoritesToggle : CollectionDetailAction
     data object OnClearFilters : CollectionDetailAction
+    data class OnKnowledgeFilterToggle(val level: KnowledgeLevel) : CollectionDetailAction
+    data object OnFavoritesFilterToggle : CollectionDetailAction
+    data class OnSortOptionSelect(val option: WordSortOption) : CollectionDetailAction
 
     // Word
-    data class OnFavoriteToggle(val word: WordCard) : CollectionDetailAction
+    data class OnWordFavoriteToggle(val word: WordCard) : CollectionDetailAction
     data class OnDeleteWord(val word: WordCard) : CollectionDetailAction
     data class OnEditWord(val word: WordCard) : CollectionDetailAction
 
     // Translation
-    data object OnToggleTranslation : CollectionDetailAction
+    data object OnTranslationVisibilityToggled : CollectionDetailAction
 
     // FAB
-    data object OnAddWordManual : CollectionDetailAction
-    data object OnAddWordAi : CollectionDetailAction
+    data object OnAddWordManualClick : CollectionDetailAction
+    data object OnAddWordAiClick : CollectionDetailAction
 
+    // Collection
+    data object OnRetry : CollectionDetailAction
     data object OnEditCollection : CollectionDetailAction
     data object OnDeleteCollection : CollectionDetailAction
 }

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Check
-import androidx.compose.material.icons.outlined.SwapVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.core_ui.Dimens
 import com.example.core_ui.theme.MemorifyTheme
 import com.example.feature_home.presentation.collection_detail.model.WordSortOption
+import com.example.feature_home.presentation.mapper.displayIcon
 import com.example.feature_home.presentation.mapper.displayLabel
 import kotlinx.coroutines.launch
 
@@ -95,10 +95,10 @@ private fun SortOptionRow(
             )
     ) {
         Icon(
-            imageVector = Icons.Outlined.SwapVert,
+            imageVector = option.displayIcon(),
             contentDescription = null,
             tint = if (selected) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.onSurfaceVariant,
+                else MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
         Spacer(modifier = Modifier.width(Dimens.spacing12))
@@ -107,7 +107,7 @@ private fun SortOptionRow(
             text = option.displayLabel(),
             style = MaterialTheme.typography.bodyLarge,
             color = if (selected) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.onSurface,
+                else MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f),
         )
 

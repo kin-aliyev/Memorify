@@ -52,12 +52,7 @@ internal fun WordHeader(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(
-            start = Dimens.spacing12,
-            end = Dimens.spacing12,
-            top = Dimens.spacing12,
-            bottom = Dimens.spacing12,
-        ),
+        modifier = modifier.padding(Dimens.spacing12),
         verticalArrangement = Arrangement.spacedBy(Dimens.spacing8),
     ) {
         WordRow(
@@ -122,9 +117,9 @@ private fun WordRow(
 
 @Composable
 private fun SecondaryRow(
+    showTranslation: Boolean,
     translation: String,
     partOfSpeech: String,
-    showTranslation: Boolean,
     knowledgeLevel: KnowledgeLevel,
     levelColor: Color,
     modifier: Modifier = Modifier,
@@ -143,7 +138,6 @@ private fun SecondaryRow(
                 showTranslation = showTranslation,
                 modifier = Modifier.weight(1f),
             )
-            Spacer(modifier = Modifier.width(Dimens.spacing8))
         } else {
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -252,7 +246,6 @@ private fun WordHeaderPreview(
     @PreviewParameter(WordHeaderPreviewProvider::class) word: WordCard,
 ) {
     MemorifyTheme {
-        val knowledgeLevel = KnowledgeLevel.fromString(word.knowledgeLevel)
         WordItem(
             word = word,
             showTranslation = true,

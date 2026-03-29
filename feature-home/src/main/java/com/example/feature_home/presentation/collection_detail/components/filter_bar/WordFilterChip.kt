@@ -16,12 +16,12 @@ import androidx.compose.ui.unit.dp
 import com.example.core_ui.theme.MemorifyTheme
 
 @Composable
-fun LevelFilterChip(
+fun WordFilterChip(
     modifier: Modifier = Modifier,
     label: String,
     selected: Boolean,
     onClick: () -> Unit,
-    leadingIcon: ImageVector? = null
+    leadingIcon: ImageVector? = null,
 ) {
     FilterChip(
         label = { Text(text = label, style = MaterialTheme.typography.labelMedium) },
@@ -48,8 +48,7 @@ fun LevelFilterChip(
             enabled = true,
             selected = selected,
             borderColor = MaterialTheme.colorScheme.outlineVariant,
-            selectedBorderColor = MaterialTheme.colorScheme.primary,
-            selectedBorderWidth = 0.dp
+            selectedBorderWidth = 0.dp,
         ),
         modifier = modifier,
     )
@@ -59,9 +58,9 @@ fun LevelFilterChip(
 
 @Preview(showBackground = true, name = "Inactive")
 @Composable
-private fun LevelFilterChipInactivePreview() {
+private fun WordFilterChipInactivePreview() {
     MemorifyTheme {
-        LevelFilterChip(
+        WordFilterChip(
             label = "Learning",
             selected = false,
             onClick = {},
@@ -71,9 +70,9 @@ private fun LevelFilterChipInactivePreview() {
 
 @Preview(showBackground = true, name = "Active")
 @Composable
-private fun LevelFilterChipActivePreview() {
+private fun WordFilterChipActivePreview() {
     MemorifyTheme {
-        LevelFilterChip(
+        WordFilterChip(
             label = "Learning",
             selected = true,
             onClick = {},
@@ -83,9 +82,9 @@ private fun LevelFilterChipActivePreview() {
 
 @Preview(showBackground = true, name = "Active with icon")
 @Composable
-private fun LevelFilterChipWithIconPreview() {
+private fun WordFilterChipWithIconPreview() {
     MemorifyTheme {
-        LevelFilterChip(
+        WordFilterChip(
             label = "Favorites",
             selected = true,
             onClick = {},

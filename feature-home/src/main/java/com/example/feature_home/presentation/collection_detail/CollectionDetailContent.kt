@@ -27,6 +27,7 @@ import com.example.core_domain.model.collection.Collection
 import com.example.core_domain.model.word.KnowledgeLevel
 import com.example.core_domain.model.word.WordCard
 import com.example.core_ui.Dimens
+import com.example.core_ui.common.ErrorRetryState
 import com.example.core_ui.common.LoadingOverlay
 import com.example.core_ui.common.scaffold.AppHeader
 import com.example.core_ui.common.scaffold.PreviewScaffold
@@ -48,6 +49,13 @@ fun CollectionDetailContent(
     when {
         uiState.isLoading -> {
             LoadingOverlay(isLoading = uiState.isLoading)
+        }
+
+        uiState.isError -> {
+            ErrorRetryState(
+                onRetry = { onAction(CollectionDetailAction.OnRetry) },
+                modifier = modifier
+            )
         }
 
         else -> {
@@ -76,8 +84,14 @@ fun CollectionDetailContent(
                         FilterBar(
                             filterState = uiState.filterState,
                             onClearFilters = { onAction(CollectionDetailAction.OnClearFilters) },
-                            onLevelToggle = { onAction(CollectionDetailAction.OnLevelFilterToggle(it)) },
-                            onFavoritesToggle = { onAction(CollectionDetailAction.OnFavoritesToggle) },
+                            onLevelToggle = {
+                                onAction(
+                                    CollectionDetailAction.OnKnowledgeFilterToggle(
+                                        it
+                                    )
+                                )
+                            },
+                            onFavoritesToggle = { onAction(CollectionDetailAction.OnFavoritesFilterToggle) },
                             onSortClick = onSortClick
                         )
                     }
@@ -100,7 +114,7 @@ fun CollectionDetailContent(
                             showTranslation = uiState.showTranslation,
                             onFavoriteToggle = {
                                 onAction(
-                                    CollectionDetailAction.OnFavoriteToggle(
+                                    CollectionDetailAction.OnWordFavoriteToggle(
                                         word
                                     )
                                 )
@@ -271,3 +285,18 @@ private fun CollectionDetailContentEmptyFilteredPreview() {
         }
     }
 }
+
+@Preview(name = "Content — Error")
+@Composable
+private fun CollectionDetailContentErrorPreview() {
+    MemorifyTheme {
+        PreviewScaffold {
+            CollectionDetailContent(
+                uiState = CollectionDetailUiState(isError = true, isLoading = false),
+                onAction = {},
+                onSortClick = {},
+            )
+        }
+    }
+}
+

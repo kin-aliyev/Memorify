@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.core_domain.model.collection.CollectionColor
 import com.example.core_ui.Dimens
+import com.example.core_ui.common.ErrorRetryState
 import com.example.core_ui.common.LoadingOverlay
 import com.example.core_ui.common.scaffold.AppHeader
 import com.example.core_ui.common.scaffold.PreviewScaffold
@@ -46,6 +47,14 @@ fun CollectionsScreenContent(
     when {
         uiState.isLoading -> {
             LoadingOverlay(isLoading = uiState.isLoading)
+        }
+
+        uiState.isError -> {
+            ErrorRetryState(
+                onRetry = { onAction(CollectionsAction.OnRetry)},
+                modifier = modifier,
+                subtitle = "We couldn't load your collections.\nCheck your connection and try again.",
+            )
         }
 
         uiState.collections.isEmpty() -> {

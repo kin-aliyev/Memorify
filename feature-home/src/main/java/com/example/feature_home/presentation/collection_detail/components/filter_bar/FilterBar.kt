@@ -34,7 +34,7 @@ fun FilterBar(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         item {
-            LevelFilterChip(
+            WordFilterChip(
                 label = "All",
                 selected = filterState.selectedLevels.isEmpty() && !filterState.favoritesOnly,
                 onClick = onClearFilters,
@@ -42,7 +42,7 @@ fun FilterBar(
         }
 
         items(KnowledgeLevel.entries) { level ->
-            LevelFilterChip(
+            WordFilterChip(
                 label = level.displayName(),
                 selected = level in filterState.selectedLevels,
                 onClick = { onLevelToggle(level) },
@@ -50,7 +50,7 @@ fun FilterBar(
         }
 
         item {
-            LevelFilterChip(
+            WordFilterChip(
                 label = "Favorites",
                 selected = filterState.favoritesOnly,
                 onClick = onFavoritesToggle,
@@ -66,7 +66,7 @@ fun FilterBar(
         }
 
         item {
-            SortChip(
+            SortWordsChip(
                 sortOption = filterState.sortOption,
                 onClick = onSortClick,
             )

@@ -45,7 +45,7 @@ fun CollectionDetailScreen(
             TopBarState(
                 title = uiState.collection?.let { "${it.emoji} ${it.name}" } ?: "Collection",
                 actions = {
-                    IconButton(onClick = { viewModel.onAction(CollectionDetailAction.OnToggleTranslation)}) {
+                    IconButton(onClick = { viewModel.onAction(CollectionDetailAction.OnTranslationVisibilityToggled)}) {
                         Icon(
                             imageVector = if (uiState.showTranslation) Icons.Outlined.Visibility
                                 else Icons.Outlined.VisibilityOff,
@@ -63,7 +63,7 @@ fun CollectionDetailScreen(
                                 label = "Add manually",
                                 onClick = {
                                     fabExpanded = false
-                                    viewModel.onAction(CollectionDetailAction.OnAddWordManual)
+                                    viewModel.onAction(CollectionDetailAction.OnAddWordManualClick)
                                 },
                             ),
                             SpeedDialItem(
@@ -71,7 +71,7 @@ fun CollectionDetailScreen(
                                 label = "Generate with AI",
                                 onClick = {
                                     fabExpanded = false
-                                    viewModel.onAction(CollectionDetailAction.OnAddWordAi)
+                                    viewModel.onAction(CollectionDetailAction.OnAddWordAiClick)
                                 },
                             ),
                         )

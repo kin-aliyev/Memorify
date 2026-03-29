@@ -50,26 +50,30 @@ class CollectionDetailViewModel @Inject constructor(
     }
 
     fun onAction(action: CollectionDetailAction) = when (action) {
-        is CollectionDetailAction.OnLevelFilterToggle -> toggleLevelFilter(action.level)
-        is CollectionDetailAction.OnSortOptionSelect -> updateSort(action.option)
-        is CollectionDetailAction.OnFavoritesToggle -> toggleFavoritesFilter()
+        // Filters
         is CollectionDetailAction.OnClearFilters -> clearFilters()
+        is CollectionDetailAction.OnKnowledgeFilterToggle -> toggleLevelFilter(action.level)
+        is CollectionDetailAction.OnFavoritesFilterToggle -> toggleFavoritesFilter()
+        is CollectionDetailAction.OnSortOptionSelect -> updateSort(action.option)
 
-        is CollectionDetailAction.OnFavoriteToggle -> toggleFavorite(action.word)
-        is CollectionDetailAction.OnDeleteWord -> deleteWord(action.word)
+        // Word
+        is CollectionDetailAction.OnWordFavoriteToggle -> toggleFavorite(action.word)
         is CollectionDetailAction.OnEditWord -> navigate(
-           CollectionDetailNavigationEvent.ToEditWord(collectionId = collectionId, wordId = action.word.id)
+            event = CollectionDetailNavigationEvent.ToEditWord(collectionId = collectionId, wordId = action.word.id)
+        )
+        is CollectionDetailAction.OnDeleteWord -> deleteWord(action.word)
+
+        // Fab
+        is CollectionDetailAction.OnAddWordManualClick -> navigate(
+            event = CollectionDetailNavigationEvent.ToAddWordManual(collectionId)
+        )
+        is CollectionDetailAction.OnAddWordAiClick -> navigate(
+            event = CollectionDetailNavigationEvent.ToAddWordAi(collectionId)
         )
 
-        is CollectionDetailAction.OnToggleTranslation -> toggleTranslation()
-
-        is CollectionDetailAction.OnAddWordManual -> navigate(
-            CollectionDetailNavigationEvent.ToAddWordManual(collectionId)
-        )
-        is CollectionDetailAction.OnAddWordAi -> navigate(
-            CollectionDetailNavigationEvent.ToAddWordAi(collectionId)
-        )
-
+        // Collection
+        is CollectionDetailAction.OnRetry -> loadData()
+        is CollectionDetailAction.OnTranslationVisibilityToggled -> toggleTranslation()
         is CollectionDetailAction.OnEditCollection -> navigate(CollectionDetailNavigationEvent.ToEditCollection)
         is CollectionDetailAction.OnDeleteCollection -> handleDeleteCollection()
     }
@@ -77,17 +81,18 @@ class CollectionDetailViewModel @Inject constructor(
     private fun loadData() {
         viewModelScope.launch {
             getCollectionDetail(collectionId)
-                .onStart { _uiState.update { it.copy(isLoading = true) } }
+                .onStart { _uiState.update { it.copy(isLoading = true, isError = false) } }
                 .catch {
-                    _uiState.update { it.copy(isLoading = false) }
+                    _uiState.update { it.copy(isLoading = false, isError = true) }
                     _errorEvent.emit(CollectionDetailError.LoadFailed)
                 }
                 .collect { detail ->
                     _uiState.update {
                         it.copy(
                             isLoading = false,
+                            isError = false,
                             collection = detail.collection,
-                            words = detail.words,
+                            words = detail.words
                         )
                     }
                 }

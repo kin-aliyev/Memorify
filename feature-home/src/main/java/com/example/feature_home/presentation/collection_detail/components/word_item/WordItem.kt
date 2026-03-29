@@ -52,7 +52,7 @@ fun WordItem(
     val levelColor = knowledgeLevel.toColor()
 
     val headerBackground by animateColorAsState(
-        targetValue = if (isExpanded) levelColor.copy(alpha = 0.10f)
+        targetValue = if (isExpanded) levelColor.copy(alpha = 0.15f)
             .compositeOver(MaterialTheme.colorScheme.surfaceContainerLow)
         else MaterialTheme.colorScheme.surfaceContainerLow,
         animationSpec = tween(durationMillis = 300),
@@ -72,7 +72,10 @@ fun WordItem(
                 )
             )
     ) {
-        Column {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
             // ── Section 1: Word Header ──
             Row(
                 modifier = Modifier
@@ -110,6 +113,7 @@ fun WordItem(
                             .fillMaxHeight()
                             .background(levelColor.copy(alpha = 0.20f)),
                     )
+
                     WordDetails(
                         word = word,
                         showTranslation = showTranslation,

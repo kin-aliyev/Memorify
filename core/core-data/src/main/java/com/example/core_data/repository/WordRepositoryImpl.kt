@@ -71,7 +71,7 @@ class WordRepositoryImpl @Inject constructor(
             .whereLessThanOrEqualTo("srs.nextReviewAt", now)
             .orderBy("srs.nextReviewAt", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, error ->
-                if(error != null) { close(error); return@addSnapshotListener }
+                if(error != null) { close(error.toAppException()); return@addSnapshotListener }
 
                 trySend(snapshot?.documents?.mapNotNull { it.toWordCard() } ?: emptyList())
             }
@@ -82,7 +82,7 @@ class WordRepositoryImpl @Inject constructor(
     override suspend fun addWord(word: WordCard): Result<String> = runCatching {
         val col = wordsCollection(uid())
         val doc = col.document()
-        val synced = word.copy(id = doc.id, knowledgeLevel = word.srs.toKnowledgeLevel().name )
+        val synced = word.copy(id = doc.id, knowledgeLevel = word.srs.toKnowledgeLevel().name)
 
         doc.set(synced.toMap()).await()
         doc.id

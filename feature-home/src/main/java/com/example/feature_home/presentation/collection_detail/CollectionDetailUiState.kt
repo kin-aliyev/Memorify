@@ -8,6 +8,7 @@ import com.example.feature_home.presentation.collection_detail.model.WordSortOpt
 
 data class CollectionDetailUiState(
     val isLoading: Boolean = true,
+    val isError: Boolean = false,
     val collection: Collection? = null,
     val words: List<WordCard> = emptyList(),
     val filterState: WordFilterState = WordFilterState(),

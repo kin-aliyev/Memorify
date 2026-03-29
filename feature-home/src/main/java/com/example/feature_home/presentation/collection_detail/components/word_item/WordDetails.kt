@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.FormatListBulleted
 import androidx.compose.material.icons.outlined.ChatBubbleOutline
-import androidx.compose.material.icons.outlined.FormatListBulleted
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Link
 import androidx.compose.material.icons.outlined.SwapHoriz
@@ -105,6 +105,7 @@ internal fun WordDetails(
     ) {
         rows.forEachIndexed { index, row ->
             row()
+
             if (index < rows.lastIndex) {
                 HorizontalDivider(
                     modifier = Modifier.padding(vertical = Dimens.spacing8),
@@ -159,7 +160,7 @@ private fun CollocationRow(
         verticalAlignment = Alignment.Top,
     ) {
         Icon(
-            imageVector = Icons.Outlined.FormatListBulleted,
+            imageVector = Icons.AutoMirrored.Outlined.FormatListBulleted,
             contentDescription = "Collocations",
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.size(Dimens.iconSm),
