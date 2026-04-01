@@ -27,13 +27,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.core_domain.model.collection.CollectionColor
 import com.example.core_ui.Dimens
 import com.example.core_ui.common.ErrorRetryState
-import com.example.core_ui.common.LoadingOverlay
 import com.example.core_ui.common.scaffold.AppHeader
 import com.example.core_ui.common.scaffold.PreviewScaffold
 import com.example.core_ui.model.BottomNavItem
 import com.example.core_ui.model.TopBarState
 import com.example.core_ui.theme.MemorifyTheme
 import com.example.feature_home.presentation.collections.components.CollectionItem
+import com.example.feature_home.presentation.collections.components.CollectionsSkeleton
 import com.example.feature_home.presentation.common.SpeedDialFab
 import com.example.feature_home.presentation.common.SpeedDialItem
 import com.example.feature_home.presentation.model.CollectionUiModel
@@ -45,9 +45,7 @@ fun CollectionsContent(
     onAction: (CollectionsAction) -> Unit,
 ) {
     when {
-        uiState.isLoading -> {
-            LoadingOverlay(isLoading = uiState.isLoading)
-        }
+        uiState.isLoading -> { CollectionsSkeleton(modifier = modifier) }
 
         uiState.isError -> {
             ErrorRetryState(
@@ -59,7 +57,7 @@ fun CollectionsContent(
 
         uiState.collections.isEmpty() -> {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {

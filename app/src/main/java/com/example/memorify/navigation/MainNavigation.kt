@@ -27,21 +27,21 @@ fun MainNavigation(
         navController = navController,
         startDestination = startDestination,
         modifier = modifier,
-        // Forward navigation: slide in from right
         enterTransition = {
-            slideInHorizontally(tween(300)) { it / 5 } + fadeIn(tween(300))
+            slideInHorizontally(animationSpec = tween(durationMillis = 300)) { it / 5 } +
+                    fadeIn(animationSpec = tween(durationMillis = 300))
         },
-        // Forward navigation: previous screen slides slightly left
         exitTransition = {
-            slideOutHorizontally(tween(300)) { -it / 5 } + fadeOut(tween(200))
+            slideOutHorizontally(animationSpec = tween(durationMillis = 300)) { -it / 5 } +
+                    fadeOut(animationSpec = tween(durationMillis = 200))
         },
-        // Back navigation: screen slides back in from left
         popEnterTransition = {
-            slideInHorizontally(tween(300)) { -it / 5 } + fadeIn(tween(300))
+            slideInHorizontally(animationSpec = tween(durationMillis = 300)) { -it / 5 } +
+                    fadeIn(animationSpec = tween(durationMillis = 300))
         },
-        // Back navigation: screen slides out to right
         popExitTransition = {
-            slideOutHorizontally(tween(300)) { it / 5 } + fadeOut(tween(200))
+            slideOutHorizontally(animationSpec = tween(durationMillis = 300)) { it / 5 } +
+                    fadeOut(animationSpec = tween(durationMillis = 200))
         },
     ) {
 
