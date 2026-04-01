@@ -36,14 +36,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.core_domain.model.collection.CollectionColor
-import com.example.core_ui.collection.CollectionEmoji
 import com.example.core_ui.Dimens
-import com.example.core_ui.mapper.toColor
+import com.example.core_ui.collection.CollectionEmoji
 import com.example.core_ui.common.PrimaryButton
+import com.example.core_ui.mapper.toColor
 import com.example.core_ui.theme.MemorifyTheme
 
 @Composable
-fun AddCollectionDialog(
+fun CollectionFormDialog(
     onConfirm: (name: String, emoji: String, color: CollectionColor) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -222,9 +222,9 @@ fun EmojiItem(
 
 @Preview
 @Composable
-private fun AddCollectionDialogPreview() {
+private fun CollectionFormDialogPreview() {
     MemorifyTheme {
-        AddCollectionDialog(
+        CollectionFormDialog(
             onConfirm = { _, _, _ -> },
             onDismiss = {},
         )
