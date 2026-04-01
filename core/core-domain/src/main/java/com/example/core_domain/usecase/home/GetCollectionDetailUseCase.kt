@@ -1,11 +1,11 @@
 package com.example.core_domain.usecase.home
 
-import com.example.core_domain.exception.AppException
 import com.example.core_domain.model.collection.CollectionDetail
 import com.example.core_domain.repository.CollectionRepository
 import com.example.core_domain.repository.WordRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
 import javax.inject.Inject
 
 class GetCollectionDetailUseCase @Inject constructor(
@@ -18,7 +18,7 @@ class GetCollectionDetailUseCase @Inject constructor(
             wordRepository.getWords(collectionId)
         ) { collections, words ->
             val collection = collections.find { it.id == collectionId }
-                ?: throw AppException.UnknownError(errorMessage = "Collection not found")
+                ?: return@combine null
             CollectionDetail(collection, words)
-        }
+        }.filterNotNull()
 }

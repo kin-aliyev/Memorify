@@ -9,5 +9,6 @@
     <string name="error_load_failed">Failed to load. Check your connection.</string>
     <string name="error_delete_word_failed">Failed to delete word. Try again.</string>
     <string name="error_favorite_update_failed">Failed to update favorite.</string>
+    <string name="error_update_collection_failed">Failed to update collection. Try again.</string>
     <string name="error_delete_collection_failed">Failed to delete collection. Try again.</string>
 </resources>

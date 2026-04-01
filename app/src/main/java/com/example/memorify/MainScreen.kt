@@ -12,6 +12,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -24,7 +26,12 @@ import com.example.memorify.navigation.MainNavigation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun MainScreen() {
+internal fun MainScreen(
+    viewModel: MainViewModel = hiltViewModel()
+) {
+    val startDestination by viewModel.startDestination.collectAsStateWithLifecycle()
+    val destination = startDestination ?: return
+
     val navController = rememberNavController()
     var topBarState by remember { mutableStateOf(TopBarState()) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -56,6 +63,7 @@ internal fun MainScreen() {
         floatingActionButton = { topBarState.fab?.invoke() }
     ) { innerPadding ->
         MainNavigation(
+            startDestination = destination,
             navController = navController,
             onSetTopBar = { topBarState = it },
             snackbarHostState = snackbarHostState,

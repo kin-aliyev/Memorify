@@ -1,4 +1,4 @@
-package com.example.feature_home.presentation.collections.components
+package com.example.feature_home.presentation.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,18 +44,23 @@ import com.example.core_ui.theme.MemorifyTheme
 
 @Composable
 fun CollectionFormDialog(
+    title: String,
+    confirmLabel: String,
     onConfirm: (name: String, emoji: String, color: CollectionColor) -> Unit,
     onDismiss: () -> Unit,
+    initialName: String = "",
+    initialEmoji: String = CollectionEmoji.all.first(),
+    initialColor: CollectionColor = CollectionColor.ORANGE
 ) {
-    var selectedEmoji by rememberSaveable { mutableStateOf(CollectionEmoji.all.first()) }
-    var selectedColor by rememberSaveable { mutableStateOf(CollectionColor.ORANGE) }
-    var name by rememberSaveable { mutableStateOf("") }
+    var selectedEmoji by rememberSaveable { mutableStateOf(initialEmoji) }
+    var selectedColor by rememberSaveable { mutableStateOf(initialColor) }
+    var name by rememberSaveable { mutableStateOf(initialName) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = "New collection",
+                text = title,
                 style = MaterialTheme.typography.titleLarge,
             )
         },
@@ -134,7 +139,7 @@ fun CollectionFormDialog(
         },
         confirmButton = {
             PrimaryButton(
-                label = "Create",
+                label = confirmLabel,
                 onClick = { onConfirm(name.trim(), selectedEmoji, selectedColor) },
                 enabled = name.isNotBlank(),
             )
@@ -227,6 +232,8 @@ private fun CollectionFormDialogPreview() {
         CollectionFormDialog(
             onConfirm = { _, _, _ -> },
             onDismiss = {},
+            title = "New collection",
+            confirmLabel = "Create",
         )
     }
 }

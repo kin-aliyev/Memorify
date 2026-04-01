@@ -9,6 +9,7 @@ sealed interface CollectionDetailError {
     data object LoadFailed : CollectionDetailError
     data object DeleteWordFailed : CollectionDetailError
     data object FavoriteUpdateFailed : CollectionDetailError
+    data object UpdateCollectionFailed : CollectionDetailError
     data object DeleteCollectionFailed : CollectionDetailError
 }
 
@@ -17,6 +18,7 @@ fun rememberCollectionDetailErrorMessages(): Map<CollectionDetailError, String> 
     val loadFailed = stringResource(R.string.error_load_failed)
     val deleteWordFailed = stringResource(R.string.error_delete_word_failed)
     val favoriteFailed = stringResource(R.string.error_favorite_update_failed)
+    val updateCollectionFailed = stringResource(R.string.error_update_collection_failed)
     val deleteCollectionFailed = stringResource(R.string.error_delete_collection_failed)
 
     return remember {
@@ -24,6 +26,7 @@ fun rememberCollectionDetailErrorMessages(): Map<CollectionDetailError, String> 
             CollectionDetailError.LoadFailed to loadFailed,
             CollectionDetailError.DeleteWordFailed to deleteWordFailed,
             CollectionDetailError.FavoriteUpdateFailed to favoriteFailed,
+            CollectionDetailError.UpdateCollectionFailed to updateCollectionFailed,
             CollectionDetailError.DeleteCollectionFailed to deleteCollectionFailed,
         )
     }

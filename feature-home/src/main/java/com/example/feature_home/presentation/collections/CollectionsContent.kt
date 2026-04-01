@@ -39,7 +39,7 @@ import com.example.feature_home.presentation.common.SpeedDialItem
 import com.example.feature_home.presentation.model.CollectionUiModel
 
 @Composable
-fun CollectionsScreenContent(
+fun CollectionsContent(
     modifier: Modifier = Modifier,
     uiState: CollectionsUiState,
     onAction: (CollectionsAction) -> Unit,
@@ -125,7 +125,7 @@ private fun CollectionsLoadingPreview() {
             topBarState = TopBarState(content = { AppHeader(label = "Memorify") }),
             selectedNavItem = BottomNavItem.Home,
         ) { innerPadding ->
-            CollectionsScreenContent(
+            CollectionsContent(
                 uiState = CollectionsUiState(isLoading = true),
                 onAction = {},
                 modifier = Modifier.padding(innerPadding),
@@ -142,7 +142,7 @@ private fun CollectionsEmptyPreview() {
             topBarState = TopBarState(content = { AppHeader(label = "Memorify") }),
             selectedNavItem = BottomNavItem.Home,
         ) { innerPadding ->
-            CollectionsScreenContent(
+            CollectionsContent(
                 uiState = CollectionsUiState(collections = emptyList(), isLoading = false),
                 onAction = {},
                 modifier = Modifier.padding(innerPadding),
@@ -185,7 +185,7 @@ private fun CollectionsWithDataPreview() {
             ),
             selectedNavItem = BottomNavItem.Home,
         ) { innerPadding ->
-            CollectionsScreenContent(
+            CollectionsContent(
                 uiState = CollectionsUiState(
                     isLoading = false,
                     collections = listOf(

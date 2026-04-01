@@ -1,19 +1,23 @@
 package com.example.feature_home.presentation.collection_detail
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.core_domain.model.collection.CollectionColor
 import com.example.core_domain.model.word.KnowledgeLevel
 import com.example.core_domain.model.word.WordCard
 import com.example.core_domain.usecase.home.GetCollectionDetailUseCase
 import com.example.feature_home.domain.usecase.DeleteCollectionUseCase
 import com.example.feature_home.domain.usecase.DeleteWordUseCase
+import com.example.feature_home.domain.usecase.UpdateCollectionUseCase
 import com.example.feature_home.domain.usecase.UpdateWordUseCase
 import com.example.feature_home.presentation.collection_detail.model.WordFilterState
 import com.example.feature_home.presentation.collection_detail.model.WordSortOption
 import com.example.feature_home.presentation.navigation.HomeRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -31,6 +35,7 @@ class CollectionDetailViewModel @Inject constructor(
     private val getCollectionDetail: GetCollectionDetailUseCase,
     private val updateWordCard: UpdateWordUseCase,
     private val deleteWordCard: DeleteWordUseCase,
+    private val updateCollection : UpdateCollectionUseCase,
     private val deleteCollection : DeleteCollectionUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -51,9 +56,9 @@ class CollectionDetailViewModel @Inject constructor(
 
     fun onAction(action: CollectionDetailAction) = when (action) {
         // Filters
-        is CollectionDetailAction.OnClearFilters -> clearFilters()
+        CollectionDetailAction.OnClearFilters -> clearFilters()
         is CollectionDetailAction.OnKnowledgeFilterToggle -> toggleLevelFilter(action.level)
-        is CollectionDetailAction.OnFavoritesFilterToggle -> toggleFavoritesFilter()
+        CollectionDetailAction.OnFavoritesFilterToggle -> toggleFavoritesFilter()
         is CollectionDetailAction.OnSortOptionSelect -> updateSort(action.option)
 
         // Word
@@ -72,21 +77,27 @@ class CollectionDetailViewModel @Inject constructor(
         )
 
         // Collection
-        is CollectionDetailAction.OnRetry -> loadData()
-        is CollectionDetailAction.OnTranslationVisibilityToggled -> toggleTranslation()
-        is CollectionDetailAction.OnEditCollection -> navigate(CollectionDetailNavigationEvent.ToEditCollection)
-        is CollectionDetailAction.OnDeleteCollection -> handleDeleteCollection()
+        CollectionDetailAction.OnRetry -> loadData()
+        CollectionDetailAction.OnTranslationVisibilityToggled -> toggleTranslation()
+        is CollectionDetailAction.OnEditCollectionConfirm -> updateCollection(
+            name = action.name, emoji = action.emoji, color = action.color
+        )
+        CollectionDetailAction.OnDeleteCollection -> handleDeleteCollection()
     }
 
     private fun loadData() {
         viewModelScope.launch {
+            Log.d("DETAIL", "collection = doo")
             getCollectionDetail(collectionId)
                 .onStart { _uiState.update { it.copy(isLoading = true, isError = false) } }
-                .catch {
+                .catch { e ->
+                    Log.d("DETAIL", "collection = ${e.message} and ${e.cause}")
+                    if (e is CancellationException) throw e
                     _uiState.update { it.copy(isLoading = false, isError = true) }
                     _errorEvent.emit(CollectionDetailError.LoadFailed)
                 }
                 .collect { detail ->
+                    Log.d("DETAIL", "collection = ${detail.collection.name}")
                     _uiState.update {
                         it.copy(
                             isLoading = false,
@@ -141,6 +152,17 @@ class CollectionDetailViewModel @Inject constructor(
 
     private fun toggleTranslation() {
         _uiState.update { it.copy(showTranslation = !it.showTranslation) }
+    }
+
+    private fun updateCollection(name: String, emoji: String, color: CollectionColor) {
+        viewModelScope.launch {
+            val current = _uiState.value.collection ?: return@launch
+            val updated = current.copy(
+                name = name, emoji = emoji, color = color.name
+            )
+            updateCollection(updated)
+                .onFailure { _errorEvent.emit(CollectionDetailError.UpdateCollectionFailed) }
+        }
     }
 
     private fun handleDeleteCollection() {

@@ -8,6 +8,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import com.example.core_ui.model.TopBarState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -17,20 +19,25 @@ fun MainTopBar(
     modifier: Modifier = Modifier,
     scrollBehavior: TopAppBarScrollBehavior? = null
 ) {
-    if (state.content != null) {
-        state.content.invoke()
-    } else {
-        TopAppBar(
+    when {
+        state.content != null -> state.content.invoke()
+        else -> TopAppBar(
             modifier = modifier,
             title = {
                 Text(
                     text = state.title,
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
             },
             navigationIcon = { state.navigationIcon?.invoke() },
             actions = { state.actions?.invoke() },
-            colors = TopAppBarDefaults.topAppBarColors(),
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+                titleContentColor = MaterialTheme.colorScheme.onSurface,
+            ),
             scrollBehavior = scrollBehavior,
         )
     }

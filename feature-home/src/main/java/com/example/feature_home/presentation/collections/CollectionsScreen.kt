@@ -22,7 +22,7 @@ import com.example.core_ui.common.scaffold.PreviewScaffold
 import com.example.core_ui.model.BottomNavItem
 import com.example.core_ui.model.TopBarState
 import com.example.core_ui.theme.MemorifyTheme
-import com.example.feature_home.presentation.collections.components.AddCollectionDialog
+import com.example.feature_home.presentation.common.CollectionFormDialog
 import com.example.feature_home.presentation.common.SpeedDialFab
 import com.example.feature_home.presentation.common.SpeedDialItem
 
@@ -105,7 +105,9 @@ fun CollectionsScreen(
     }
 
     if (showAddCollectionDialog) {
-        AddCollectionDialog(
+        CollectionFormDialog(
+            title = "New collection",
+            confirmLabel = "Create",
             onConfirm = { name, emoji, color ->
                 showAddCollectionDialog = false
                 viewModel.onAction(CollectionsAction.OnAddCollectionConfirm(name, emoji, color))
@@ -114,7 +116,7 @@ fun CollectionsScreen(
         )
     }
 
-    CollectionsScreenContent(
+    CollectionsContent(
         uiState = uiState,
         onAction = viewModel::onAction,
         modifier = modifier,
@@ -127,7 +129,7 @@ fun CollectionsScreen(
 @Composable
 private fun SpeedDialExpandedPreview() {
     MemorifyTheme {
-        var showAddCollectionDialog by remember { mutableStateOf(true) }
+        var showAddCollectionDialog by remember { mutableStateOf(false) }
         PreviewScaffold(
             topBarState = TopBarState(
                 content = { AppHeader(label = "Memorify") },
@@ -159,12 +161,14 @@ private fun SpeedDialExpandedPreview() {
             selectedNavItem = BottomNavItem.Home,
         ) { innerPadding ->
             if (showAddCollectionDialog) {
-                AddCollectionDialog(
+                CollectionFormDialog(
+                    title = "New collection",
+                    confirmLabel = "Create",
                     onConfirm = { name, emoji, color -> },
                     onDismiss = { showAddCollectionDialog = false },
                 )
             }
-            CollectionsScreenContent(
+            CollectionsContent(
                 uiState = CollectionsUiState(collections = emptyList(), isLoading = false),
                 onAction = {},
                 modifier = Modifier.padding(innerPadding),

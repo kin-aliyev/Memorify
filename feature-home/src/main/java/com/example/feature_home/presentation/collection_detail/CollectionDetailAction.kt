@@ -1,5 +1,6 @@
 package com.example.feature_home.presentation.collection_detail
 
+import com.example.core_domain.model.collection.CollectionColor
 import com.example.core_domain.model.word.KnowledgeLevel
 import com.example.core_domain.model.word.WordCard
 import com.example.feature_home.presentation.collection_detail.model.WordSortOption
@@ -25,6 +26,8 @@ sealed interface CollectionDetailAction {
 
     // Collection
     data object OnRetry : CollectionDetailAction
-    data object OnEditCollection : CollectionDetailAction
+    data class OnEditCollectionConfirm(
+        val name: String, val emoji: String, val color: CollectionColor
+    ): CollectionDetailAction
     data object OnDeleteCollection : CollectionDetailAction
 }

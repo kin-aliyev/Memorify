@@ -46,6 +46,8 @@ dependencies {
 
     // ─── Modules ──────────────────────────────────────────────
     implementation(project(":core:core-ui"))
+    implementation(project(":core:core-domain"))
+    implementation(project(":core:core-data"))
     implementation(project(":feature-auth"))
     implementation(project(":feature-home"))
 
@@ -54,6 +56,7 @@ dependencies {
 
     // ─── DI ───────────────────────────────────────────────────
     implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
 
     // ─── Firebase ─────────────────────────────────────────────

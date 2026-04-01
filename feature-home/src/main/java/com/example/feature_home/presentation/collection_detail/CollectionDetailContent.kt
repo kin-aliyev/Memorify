@@ -28,12 +28,12 @@ import com.example.core_domain.model.word.KnowledgeLevel
 import com.example.core_domain.model.word.WordCard
 import com.example.core_ui.Dimens
 import com.example.core_ui.common.ErrorRetryState
-import com.example.core_ui.common.LoadingOverlay
 import com.example.core_ui.common.scaffold.AppHeader
 import com.example.core_ui.common.scaffold.PreviewScaffold
 import com.example.core_ui.model.BottomNavItem
 import com.example.core_ui.model.TopBarState
 import com.example.core_ui.theme.MemorifyTheme
+import com.example.feature_home.presentation.collection_detail.components.CollectionDetailSkeleton
 import com.example.feature_home.presentation.collection_detail.components.CollectionSummaryCard
 import com.example.feature_home.presentation.collection_detail.components.filter_bar.FilterBar
 import com.example.feature_home.presentation.collection_detail.components.word_item.WordItem
@@ -48,7 +48,7 @@ fun CollectionDetailContent(
 ) {
     when {
         uiState.isLoading -> {
-            LoadingOverlay(isLoading = uiState.isLoading)
+            CollectionDetailSkeleton(modifier = modifier)
         }
 
         uiState.isError -> {

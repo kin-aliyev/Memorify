@@ -23,10 +23,10 @@ fun NavGraphBuilder.homeNavGraph(
                 snackbarHostState = snackbarHostState,
 
                 onNavigateToCollectionDetail = { collectionId ->
-                    navController.navigate(HomeRoute.CollectionDetail(collectionId))
+                    navController.navigate(route = HomeRoute.CollectionDetail(collectionId))
                 },
-                onNavigateToAddManual = { navController.navigate(HomeRoute.AddEditWord) },
-                onNavigateToAddAi = { navController.navigate(HomeRoute.AddWordAi) }
+                onNavigateToAddManual = { navController.navigate(route = HomeRoute.AddEditWord) },
+                onNavigateToAddAi = { navController.navigate(route = HomeRoute.AddWordAi) }
             )
         }
 
@@ -34,18 +34,16 @@ fun NavGraphBuilder.homeNavGraph(
             CollectionDetailScreen(
                 onSetTopBar = onSetTopBar,
                 snackbarHostState = snackbarHostState,
+
                 onNavigateToAddWordManual = { collectionId ->
-                    navController.navigate(HomeRoute.AddEditWord(collectionId = collectionId))
+                    navController.navigate(route = HomeRoute.AddEditWord(collectionId = collectionId))
                 },
                 onNavigateToAddWordAi = { collectionId ->
-                    navController.navigate(HomeRoute.AddWordAi(collectionId = collectionId))
+                    navController.navigate(route = HomeRoute.AddWordAi(collectionId = collectionId))
                 },
                 onNavigateToEditWord = { collectionId, wordId ->
                     navController.navigate(
-                        HomeRoute.AddEditWord(
-                            collectionId = collectionId,
-                            wordId = wordId
-                        )
+                      route = HomeRoute.AddEditWord(collectionId = collectionId, wordId = wordId)
                     )
                 },
                 onNavigateBack = {
