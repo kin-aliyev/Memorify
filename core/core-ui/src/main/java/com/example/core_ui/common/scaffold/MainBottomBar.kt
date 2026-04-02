@@ -37,7 +37,8 @@ fun MainBottomBar(
         NavigationBar(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(Dimens.heightNavigationBar),
+                .height(Dimens.heightNavigationBar)
+                .clip(RoundedCornerShape(topStart = 36.dp, topEnd = 36.dp)),
             windowInsets = WindowInsets(0),
             containerColor = MaterialTheme.colorScheme.surfaceContainer
         ) {

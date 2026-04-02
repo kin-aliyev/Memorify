@@ -3,6 +3,7 @@ package com.example.feature_home.presentation.collection_detail.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -14,7 +15,7 @@ import com.example.core_ui.common.ShimmerBox
 @Composable
 fun CollectionDetailSkeleton(modifier: Modifier = Modifier) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().padding(top = Dimens.spacing12),
         verticalArrangement = Arrangement.spacedBy(Dimens.spacing12),
         contentPadding = PaddingValues(horizontal = Dimens.paddingScreen),
         userScrollEnabled = false,

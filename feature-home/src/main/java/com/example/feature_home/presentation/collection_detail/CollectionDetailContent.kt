@@ -211,7 +211,9 @@ private fun previewWords() = listOf(
 @Composable
 private fun CollectionDetailContentLoadingPreview() {
     MemorifyTheme {
-        PreviewScaffold {
+        PreviewScaffold(
+            topBarState = TopBarState(title = "Business English")
+        ) {
             CollectionDetailContent(
                 uiState = CollectionDetailUiState(isLoading = true),
                 onAction = {},
