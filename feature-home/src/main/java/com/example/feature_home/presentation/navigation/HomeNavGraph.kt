@@ -15,39 +15,39 @@ fun NavGraphBuilder.homeNavGraph(
     onSetTopBar: (TopBarState) -> Unit,
     snackbarHostState: SnackbarHostState,
 ) {
-    navigation<GraphRoute.Home>(startDestination = HomeRoute.Collections) {
+    navigation<GraphRoute.Home>(startDestination = HomeGraph.Collections) {
 
-        composable<HomeRoute.Collections> {
+        composable<HomeGraph.Collections> {
             CollectionsScreen(
                 onSetTopBar = onSetTopBar,
                 snackbarHostState = snackbarHostState,
 
                 onNavigateToCollectionDetail = { collectionId ->
-                    navController.navigate(route = HomeRoute.CollectionDetail(collectionId))
+                    navController.navigate(route = HomeGraph.CollectionDetail(collectionId))
                 },
-                onNavigateToAddManual = { navController.navigate(route = HomeRoute.AddEditWord) },
-                onNavigateToAddAi = { navController.navigate(route = HomeRoute.AddWordAi) }
+                onNavigateToAddManual = { navController.navigate(route = HomeGraph.AddEditWord) },
+                onNavigateToAddAi = { navController.navigate(route = HomeGraph.AddWordAi) }
             )
         }
 
-        composable<HomeRoute.CollectionDetail> {
+        composable<HomeGraph.CollectionDetail> {
             CollectionDetailScreen(
                 onSetTopBar = onSetTopBar,
                 snackbarHostState = snackbarHostState,
 
                 onNavigateToAddWordManual = { collectionId ->
-                    navController.navigate(route = HomeRoute.AddEditWord(collectionId = collectionId))
+                    navController.navigate(route = HomeGraph.AddEditWord(collectionId = collectionId))
                 },
                 onNavigateToAddWordAi = { collectionId ->
-                    navController.navigate(route = HomeRoute.AddWordAi(collectionId = collectionId))
+                    navController.navigate(route = HomeGraph.AddWordAi(collectionId = collectionId))
                 },
                 onNavigateToEditWord = { collectionId, wordId ->
                     navController.navigate(
-                      route = HomeRoute.AddEditWord(collectionId = collectionId, wordId = wordId)
+                      route = HomeGraph.AddEditWord(collectionId = collectionId, wordId = wordId)
                     )
                 },
                 onNavigateBack = {
-                    navController.popBackStack(route = HomeRoute.Collections, inclusive = false)
+                    navController.popBackStack(route = HomeGraph.Collections, inclusive = false)
                 },
             )
         }

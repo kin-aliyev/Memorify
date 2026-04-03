@@ -14,18 +14,18 @@ fun NavGraphBuilder.authNavGraph(
     onSetTopBar: (TopBarState) -> Unit,
     onAuthSuccess: () -> Unit,
 ) {
-    navigation<GraphRoute.Auth>(startDestination = AuthRoute.SignIn) {
+    navigation<GraphRoute.Auth>(startDestination = AuthGraph.SignIn) {
 
-        composable<AuthRoute.SignIn> {
+        composable<AuthGraph.SignIn> {
             SignInScreen(
                 onSetTopBar = onSetTopBar,
-                onNavigateToSignUp = { navController.navigate(AuthRoute.SignUp) },
-                onNavigateToForgotPassword = { navController.navigate(AuthRoute.ForgotPassword) },
+                onNavigateToSignUp = { navController.navigate(AuthGraph.SignUp) },
+                onNavigateToForgotPassword = { navController.navigate(AuthGraph.ForgotPassword) },
                 onAuthSuccess = onAuthSuccess
             )
         }
 
-        composable<AuthRoute.SignUp> {
+        composable<AuthGraph.SignUp> {
             SignUpScreen(
                 onSetTopBar = onSetTopBar,
                 onAuthSuccess = onAuthSuccess

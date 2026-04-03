@@ -15,7 +15,7 @@ import com.example.feature_home.domain.usecase.UpdateCollectionUseCase
 import com.example.feature_home.domain.usecase.UpdateWordUseCase
 import com.example.feature_home.presentation.collection_detail.model.WordFilterState
 import com.example.feature_home.presentation.collection_detail.model.WordSortOption
-import com.example.feature_home.presentation.navigation.HomeRoute
+import com.example.feature_home.presentation.navigation.HomeGraph
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -39,7 +39,7 @@ class CollectionDetailViewModel @Inject constructor(
     private val deleteCollection : DeleteCollectionUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val collectionId = savedStateHandle.toRoute<HomeRoute.CollectionDetail>().collectionId
+    private val collectionId = savedStateHandle.toRoute<HomeGraph.CollectionDetail>().collectionId
 
     private val _uiState = MutableStateFlow(CollectionDetailUiState())
     val uiState: StateFlow<CollectionDetailUiState> = _uiState.asStateFlow()
